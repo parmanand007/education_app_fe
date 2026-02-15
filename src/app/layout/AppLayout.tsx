@@ -1,22 +1,36 @@
 import { Box } from "@mui/material";
+import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
-import { Outlet } from "react-router-dom";
+
+const TOPBAR_HEIGHT = 64;
+const SIDEBAR_WIDTH = 240;
 
 export default function AppLayout() {
   return (
-    <Box sx={{ display: "flex", height: "100vh", background: "#f6f9fc" }}>
-      <Sidebar />
+    <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      
+      {/* -------- TOPBAR -------- */}
+      <Topbar />
 
-      <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <Topbar />
+      {/* -------- MAIN BODY -------- */}
+      <Box sx={{ display: "flex", flex: 1, overflow: "hidden" }}>
+        
+        {/* -------- SIDEBAR -------- */}
+        <Sidebar />
 
+        {/* -------- PAGE CONTENT -------- */}
         <Box
           sx={{
             flex: 1,
             overflowY: "auto",
-            px: 5,
+            px: 4,
             py: 4,
+            backgroundColor: "background.default",
+
+            "&::-webkit-scrollbar": { display: "none" },
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
           }}
         >
           <Outlet />

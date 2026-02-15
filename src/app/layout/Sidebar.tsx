@@ -24,23 +24,36 @@ import {
   AccountCircleOutlined,
 } from "@mui/icons-material";
 import { NavLink, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const drawerWidth = 240;
 
 interface NavItem {
   label: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   path?: string;
   children?: NavItem[];
 }
 
 export default function Sidebar() {
   const location = useLocation();
-  const [openTournament, setOpenTournament] = useState(true);
+  const [openTournament, setOpenTournament] = useState(false);
 
-  const isActive = (path?: string) =>
-    path ? location.pathname.startsWith(path) : false;
+  // ✅ STRICT dashboard match
+  const isActive = (path?: string) => {
+    if (!path) return false;
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  };
+
+  useEffect(() => {
+    if (
+      location.pathname.startsWith("/contests") ||
+      location.pathname.startsWith("/leaderboard")
+    ) {
+      setOpenTournament(true);
+    }
+  }, [location.pathname]);
 
   const navSections: { title: string; items: NavItem[] }[] = [
     {
@@ -60,8 +73,8 @@ export default function Sidebar() {
           label: "Tournament",
           icon: <EmojiEventsOutlined />,
           children: [
-            { label: "My Contests", icon: <StarBorderOutlined />, path: "/contests" },
-            { label: "Leaderboard", icon: <WorkspacePremiumOutlined />, path: "/leaderboard" },
+            { label: "My Contests", path: "/contests" },
+            { label: "Leaderboard", path: "/leaderboard" },
           ],
         },
         { label: "Question Review", icon: <ListAltOutlined />, path: "/question-review" },
@@ -88,22 +101,23 @@ export default function Sidebar() {
     <Box
       sx={{
         width: drawerWidth,
-        backgroundColor: "#f4f7fb",
-        height: "100vh",
-        borderRight: "1px solid #e5e7eb",
-        pt: 2,
+        backgroundColor: "background.paper",
+        borderRight: (theme) => `1px solid ${theme.palette.divider}`,
+        pt: 3,
+        overflowY: "auto",
       }}
     >
       {navSections.map((section) => (
-        <Box key={section.title} sx={{ px: 2, mb: 2 }}>
+        <Box key={section.title} sx={{ px: 2, mb: 3 }}>
           <Typography
             variant="caption"
             sx={{
               fontWeight: 700,
-              color: "#9aa4b2",
+              color: "text.secondary",
               pl: 1,
               mb: 1,
               display: "block",
+              letterSpacing: 0.5,
             }}
           >
             {section.title}
@@ -112,6 +126,10 @@ export default function Sidebar() {
           <List disablePadding>
             {section.items.map((item) => {
               if (item.children) {
+                const childActive = item.children.some((c) =>
+                  isActive(c.path)
+                );
+
                 return (
                   <Box key={item.label}>
                     <ListItemButton
@@ -119,21 +137,33 @@ export default function Sidebar() {
                       sx={{
                         borderRadius: 2,
                         mb: 0.5,
+                        backgroundColor: childActive
+                          ? "rgba(30,167,215,0.12)"
+                          : "transparent",
                       }}
                     >
-                      <ListItemIcon sx={{ minWidth: 36 }}>
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 36,
+                          color: childActive
+                            ? "primary.main"
+                            : "text.secondary",
+                        }}
+                      >
                         {item.icon}
                       </ListItemIcon>
+
                       <ListItemText
                         primary={item.label}
                         primaryTypographyProps={{
-                          fontWeight: 500,
+                          fontWeight: childActive ? 600 : 500,
                         }}
                       />
+
                       {openTournament ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
 
-                    <Collapse in={openTournament} timeout="auto" unmountOnExit>
+                    <Collapse in={openTournament}>
                       <List component="div" disablePadding>
                         {item.children.map((child) => (
                           <ListItemButton
@@ -147,9 +177,6 @@ export default function Sidebar() {
                               backgroundColor: isActive(child.path)
                                 ? "rgba(30,167,215,0.12)"
                                 : "transparent",
-                              "&:hover": {
-                                backgroundColor: "rgba(30,167,215,0.08)",
-                              },
                             }}
                           >
                             <ListItemText
@@ -178,14 +205,19 @@ export default function Sidebar() {
                     backgroundColor: isActive(item.path)
                       ? "rgba(30,167,215,0.12)"
                       : "transparent",
-                    "&:hover": {
-                      backgroundColor: "rgba(30,167,215,0.08)",
-                    },
                   }}
                 >
-                  <ListItemIcon sx={{ minWidth: 36 }}>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 36,
+                      color: isActive(item.path)
+                        ? "primary.main"
+                        : "text.secondary",
+                    }}
+                  >
                     {item.icon}
                   </ListItemIcon>
+
                   <ListItemText
                     primary={item.label}
                     primaryTypographyProps={{

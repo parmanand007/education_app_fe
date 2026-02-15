@@ -4,6 +4,8 @@ import DashboardPage from "../features/dashboard/DashboardPage";
 import AppLayout from "./layout/AppLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import { useAuthStore } from "../features/auth/store";
+import MyProgramsPage from "../features/programs/pages/ProgramsPage";
+import ContestsPage from "../features/contests/pages/ContestsPage";
 
 export function AppRouter() {
   const token = useAuthStore((s) => s.token);
@@ -28,6 +30,9 @@ export function AppRouter() {
         }
       >
         <Route index element={<DashboardPage />} />
+         {/* Learning */}
+        <Route path="programs" element={<MyProgramsPage />} />
+        <Route path="contests" element={<ContestsPage />} />
       </Route>
 
       {/* Fallback */}
