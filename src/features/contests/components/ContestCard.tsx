@@ -15,23 +15,42 @@ const statusMap: Record<number, string> = {
   3: "Completed",
 };
 
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  });
+
+  const formattedTime = date.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  return `${formattedDate} | ${formattedTime}`;
+}
+
 export default function ContestCard({ contest }: Props) {
   const statusLabel = statusMap[contest.status];
 
   return (
     <Box
-      sx={{
+    sx={{
         backgroundColor: (theme) => theme.palette.brand.light,
-        border: (theme) => `2px solid ${theme.palette.brand.muted}`,
-        borderRadius: 1,
+        border: "1px solid #9fd6ee",
+        borderBottom: "6px solid #7dcbe6",
+        borderRadius: 1.5,
         padding: 3,
-        position: "relative",
         transition: "all 0.2s ease",
         "&:hover": {
-          transform: "translateY(-2px)",
+        transform: "translateY(-2px)",
         },
-      }}
+    }}
     >
+
       {/* Top Row */}
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box
@@ -39,7 +58,7 @@ export default function ContestCard({ contest }: Props) {
             width: 44,
             height: 44,
             borderRadius: "50%",
-            backgroundColor: (theme) => theme.palette.brand.muted,
+            backgroundColor: "#a9ddf2",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -63,14 +82,14 @@ export default function ContestCard({ contest }: Props) {
       {/* Custom Contest Badge */}
       <Box
         sx={{
-          mt: 2,
+          mt: 1,
           display: "inline-flex",
           alignItems: "center",
           backgroundColor: "#133e63",
           color: "#fff",
           px: 1.5,
           py: 0.5,
-          borderRadius: 1,
+          borderRadius: 0.5,
           fontSize: 12,
           fontWeight: 500,
         }}
@@ -81,12 +100,12 @@ export default function ContestCard({ contest }: Props) {
       {/* Title */}
       <Typography
         sx={{
-          mt: 2,
+          mt: 1,
           fontWeight: 600,
           fontSize: 15,
         }}
       >
-        {contest.title}
+        Tailored Contest
       </Typography>
 
       {/* Meta */}
@@ -100,7 +119,7 @@ export default function ContestCard({ contest }: Props) {
       <Box sx={{ mt: 0.5, display: "flex", alignItems: "center", gap: 1 }}>
         <CalendarTodayOutlinedIcon sx={{ fontSize: 14, color: "#ef4444" }} />
         <Typography sx={{ fontSize: 13, color: "#6b7280" }}>
-          {new Date(contest.start_date).toLocaleString()}
+          {formatDate(contest.start_date)}
         </Typography>
       </Box>
     </Box>
