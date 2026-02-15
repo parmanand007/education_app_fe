@@ -55,8 +55,8 @@ export default function ContestCard({ contest }: Props) {
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box
           sx={{
-            width: 44,
-            height: 44,
+            width: 60,
+            height: 60,
             borderRadius: "50%",
             backgroundColor: "#a9ddf2",
             display: "flex",
@@ -64,7 +64,7 @@ export default function ContestCard({ contest }: Props) {
             justifyContent: "center",
           }}
         >
-          <EmojiEventsOutlinedIcon sx={{ fontSize: 22 }} />
+          <EmojiEventsOutlinedIcon sx={{ fontSize: 35 }} />
         </Box>
 
         <Chip
