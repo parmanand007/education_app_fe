@@ -85,7 +85,7 @@ export default function ContestCard({ contest }: Props) {
           mt: 1,
           display: "inline-flex",
           alignItems: "center",
-          backgroundColor: "#133e63",
+          backgroundColor: (theme) => theme.palette.brand.tag,
           color: "#fff",
           px: 1.5,
           py: 0.5,

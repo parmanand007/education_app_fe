@@ -1,60 +1,57 @@
-import {
-  Box,
-  TextField,
-  Button,
-  Avatar,
-} from "@mui/material";
+import { Box, Typography, TextField, InputAdornment, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+
+const TOPBAR_HEIGHT = 64;
 
 export default function Topbar() {
   return (
     <Box
       sx={{
-        height: 72,
-        background: "#ffffff",
-        borderBottom: "1px solid #e6edf3",
+        height: TOPBAR_HEIGHT,
         display: "flex",
         alignItems: "center",
-        px: 4,
         justifyContent: "space-between",
+        px: 4,
+        borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+        backgroundColor: "background.paper",
       }}
     >
-      <Box sx={{ flex: 1 }} />
+      {/* -------- BRAND -------- */}
+      <Typography
+        sx={{
+          fontSize: 22,
+          fontWeight: 700,
+          color: "primary.main",
+          letterSpacing: 1,
+        }}
+      >
+        DOCTUSTECH
+      </Typography>
 
-      <Box sx={{ width: 420 }}>
-        <TextField
-          fullWidth
-          size="small"
-          placeholder="Search..."
-          InputProps={{
-            startAdornment: (
-              <SearchIcon sx={{ mr: 1, color: "#9aa4b2" }} />
-            ),
-          }}
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              borderRadius: 2,
-              backgroundColor: "#f6f9fc",
-            },
-          }}
-        />
-      </Box>
+      {/* -------- SEARCH -------- */}
+      <TextField
+        placeholder="Search..."
+        size="small"
+        sx={{ width: 400 }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon fontSize="small" />
+            </InputAdornment>
+          ),
+        }}
+      />
 
-      <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <Button
-          variant="outlined"
-          size="small"
-          sx={{
-            textTransform: "none",
-            borderRadius: 2,
-            fontSize: 13,
-          }}
-        >
-          Contact Support
-        </Button>
-
-        <Avatar sx={{ width: 36, height: 36 }} />
-      </Box>
+      {/* -------- SUPPORT BUTTON -------- */}
+      <Button
+        variant="outlined"
+        sx={{
+          textTransform: "none",
+          borderRadius: 2,
+        }}
+      >
+        Contact Support
+      </Button>
     </Box>
   );
 }

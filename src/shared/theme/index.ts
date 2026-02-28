@@ -6,6 +6,7 @@ declare module "@mui/material/styles" {
       light: string;
       dark: string;
       muted: string;
+      tag: string;
     };
   }
   interface PaletteOptions {
@@ -13,6 +14,7 @@ declare module "@mui/material/styles" {
       light?: string;
       dark?: string;
       muted?: string;
+      tag?: string;
     };
   }
 }
@@ -37,6 +39,7 @@ export const theme = createTheme({
       light: "#eaf4fb",
       dark: "#0f6f91",
       muted: "#b9e3f7",
+      tag:"#133e63",
     },
   },
 
