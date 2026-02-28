@@ -19,6 +19,8 @@ export default function FeedSectionWrapper({
           justifyContent: "space-between",
           alignItems: "center",
           mb: 3,
+          pt:2,
+          paddingRight:"10px"
         }}
       >
         <Typography sx={{ fontWeight: 600, fontSize: 18 }}>
@@ -31,6 +33,7 @@ export default function FeedSectionWrapper({
               fontSize: 14,
               color: "primary.main",
               cursor: "pointer",
+
             }}
           >
             View All

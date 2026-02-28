@@ -17,8 +17,9 @@ export default function ContentFeedPage() {
       <Box
         sx={{
             mt: 4,
-            border: "0.5px solid gray",
-            borderRadius: 2,
+            border: "1px solid rgba(0,0,0,0.2)",
+            borderRadius: 1,
+            paddingLeft:"20px"
         }}
         >
         <TrendingSection />

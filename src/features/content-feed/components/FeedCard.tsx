@@ -1,5 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import BarChartIcon from "@mui/icons-material/BarChart";
 import type { FeedItem } from "../api/contentFeed.types";
 
 interface Props {
@@ -12,105 +15,133 @@ export default function FeedCard({ item }: Props) {
   return (
     <Box
       sx={{
-        position: "relative",
-        width: 260,
-        height: 340,
-        borderRadius: 3,
-        overflow: "hidden",
-        flexShrink: 0,
-        cursor: "pointer",
-        backgroundColor: "#f3f4f6",
+        backgroundColor:"background.paper",
+        border: "1px solid #e5e7eb",
+        borderRadius: 1,
+        p: 2,
       }}
     >
-      {/* Background Image */}
-      {item.feed.thumbnail && (
-        <Box
-          component="img"
-          src={item.feed.thumbnail}
-          alt={item.feed.title}
-          sx={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
-        />
-      )}
-
-      {/* Category Pill */}
-      {item.feed.categories?.[0] && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 12,
-            left: 12,
-            backgroundColor: "#fff",
-            px: 1.5,
-            py: 0.5,
-            borderRadius: 10,
-            fontSize: 11,
-            fontWeight: 600,
-            color: "#f97316",
-          }}
-        >
-          {item.feed.categories[0]}
-        </Box>
-      )}
-
-      {/* Play Icon */}
-      {isVideo && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 64,
-            height: 64,
-            borderRadius: "50%",
-            backgroundColor: "rgba(255,255,255,0.85)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <PlayArrowIcon sx={{ fontSize: 32, color: "#111827" }} />
-        </Box>
-      )}
-
-      {/* Bottom Overlay */}
-      <Box
+      {/* Title */}
+      <Typography
         sx={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          p: 2,
-          background:
-            "linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0))",
+          fontSize: 16,
+          fontWeight: 600,
+          mb: 1.5,
+          minHeight: 24,
         }}
       >
-        <Typography
-          sx={{
-            fontSize: 12,
-            fontWeight: 600,
-            color: "#38bdf8",
-            mb: 0.5,
-          }}
-        >
-          {isVideo
-            ? `WATCHED BY ${item.views_count} PEOPLE`
-            : `READ BY ${item.views_count} PEOPLE`}
-        </Typography>
+        {item.feed.title}
+      </Typography>
 
-        <Typography
-          sx={{
-            fontSize: 16,
-            fontWeight: 600,
-            color: "#fff",
-            lineHeight: 1.3,
-          }}
-        >
-          {item.feed.title}
+      {/* Image Section */}
+<Box
+  sx={{
+    position: "relative",
+    borderRadius: 1,
+    overflow: "hidden",
+    height: 200,
+    backgroundColor: "#f3f4f6", // fallback background
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  {item.feed.thumbnail ? (
+    <Box
+      component="img"
+      src={item.feed.thumbnail}
+      alt={item.feed.title}
+      sx={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        display: "block",
+      }}
+    />
+  ) : (
+    <Typography
+      sx={{
+        fontSize: 14,
+        color: "#9ca3af",
+        fontWeight: 500,
+      }}
+    >
+      No Preview Available
+    </Typography>
+  )}
+
+  {/* Category Pill */}
+  {item.feed.categories?.[0] && (
+    <Box
+      sx={{
+        position: "absolute",
+        top: 12,
+        left: 12,
+        backgroundColor: "#fff",
+        px: 1.5,
+        py: 0.5,
+        borderRadius: 10,
+        fontSize: 11,
+        fontWeight: 600,
+        color: "#fb923c"
+      }}
+    >
+      {item.feed.categories[0]}
+    </Box>
+  )}
+
+  {/* Play Overlay for Video */}
+  {isVideo && (
+    <Box
+      sx={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: 70,
+        height: 70,
+        borderRadius: "50%",
+        backgroundColor: "rgba(0,0,0,0.4)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <PlayArrowIcon sx={{ fontSize: 34, color: "#fff" }} />
+    </Box>
+  )}
+</Box>
+
+      {/* Bottom Stats Row */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          mt: 1.5,
+          fontSize: 13,
+          color: "#6b7280",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <FavoriteBorderIcon sx={{ fontSize: 16 }} />
+            {item.likes_count}
+          </Box>
+
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <ChatBubbleOutlineIcon sx={{ fontSize: 16 }} />
+            {item.comments_count}
+          </Box>
+
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <BarChartIcon sx={{ fontSize: 16 }} />
+            {item.views_count}
+          </Box>
+        </Box>
+
+        <Typography sx={{ fontSize: 12 }}>
+          about 1 year ago
         </Typography>
       </Box>
     </Box>
