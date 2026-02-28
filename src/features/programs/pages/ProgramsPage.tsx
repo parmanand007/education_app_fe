@@ -1,12 +1,10 @@
 import { Box } from "@mui/material";
 import { usePrograms } from "../api/programs.hooks";
 import ProgramSection from "../components/ProgramSection";
-import EmptyState from "../components/EmptyState";
 import PageHeader from "../../../shared/components/PageHeader";
 
 export default function ProgramsPage() {
   const { data, isLoading } = usePrograms();
-
   const programs = data?.results ?? [];
 
   const assigned = programs.filter((p) => p.status === 1);
@@ -16,8 +14,6 @@ export default function ProgramsPage() {
   return (
     <Box
       sx={{
-        px: 5,
-        py: 4,
         maxWidth: 1400,
       }}
     >
@@ -29,18 +25,23 @@ export default function ProgramsPage() {
         ]}
       />
 
-      <ProgramSection title="Assigned Programs" programs={assigned} />
+      <ProgramSection
+        title="Assigned Programs"
+        programs={assigned}
+        isLoading={isLoading}
+      />
 
-      <ProgramSection title="In Progress Programs" programs={inProgress} />
+      <ProgramSection
+        title="In Progress Programs"
+        programs={inProgress}
+        isLoading={isLoading}
+      />
 
-      {completed.length > 0 ? (
-        <ProgramSection title="Completed Programs" programs={completed} />
-      ) : (
-        <Box sx={{ mt: 6 }}>
-          <ProgramSection title="Completed Programs" programs={[]} />
-          <EmptyState />
-        </Box>
-      )}
+      <ProgramSection
+        title="Completed Programs"
+        programs={completed}
+        isLoading={isLoading}
+      />
     </Box>
   );
 }

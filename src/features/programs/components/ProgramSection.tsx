@@ -1,17 +1,22 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Skeleton } from "@mui/material";
 import ProgramCard from "./ProgramCard";
+import EmptyState from "./EmptyState";
 import type { Program } from "../api/programs.types";
 
 interface Props {
   title: string;
   programs?: Program[];
+  isLoading?: boolean;
 }
 
-export default function ProgramSection({ title, programs }: Props) {
-  if (!programs || programs.length === 0) return null;
-
+export default function ProgramSection({
+  title,
+  programs = [],
+  isLoading = false,
+}: Props) {
   return (
     <Box sx={{ mb: 5 }}>
+      {/* Section Title */}
       <Typography
         sx={{
           fontSize: 18,
@@ -22,39 +27,57 @@ export default function ProgramSection({ title, programs }: Props) {
         {title}
       </Typography>
 
-      <Box
-        sx={{
+      {/* Loading State */}
+      {isLoading && (
+        <Box sx={{ display: "flex", gap: 3 }}>
+          {[1, 2, 3].map((i) => (
+            <Skeleton
+              key={i}
+              variant="rectangular"
+              width={280}
+              height={180}
+              sx={{ borderRadius: 3 }}
+            />
+          ))}
+        </Box>
+      )}
+
+      {/* Empty State */}
+      {!isLoading && programs.length === 0 && (
+        <EmptyState
+        title={`No ${title}`}
+        description={`There are no ${title.toLowerCase()} available at the moment.`}
+      />
+      )}
+
+      {/* Program Cards */}
+      {!isLoading && programs.length > 0 && (
+        <Box
+          sx={{
             display: "flex",
             gap: 3,
             overflowX: "auto",
             pb: 1,
             scrollBehavior: "smooth",
-
-            /* Hide scrollbar - Chrome, Safari, Edge */
-            "&::-webkit-scrollbar": {
-            display: "none",
-            },
-
-            /* Hide scrollbar - Firefox */
+            "&::-webkit-scrollbar": { display: "none" },
             scrollbarWidth: "none",
-
-            /* Hide scrollbar - IE */
             msOverflowStyle: "none",
-        }}
+          }}
         >
-        {programs.map((program) => (
-          <Box
-            key={program.program_id}
-            sx={{
-              minWidth: 280,  // controls card width
-              maxWidth: 280,
-              flexShrink: 0,
-            }}
-          >
-            <ProgramCard program={program} />
-          </Box>
-        ))}
-      </Box>
+          {programs.map((program) => (
+            <Box
+              key={program.program_id}
+              sx={{
+                minWidth: 280,
+                maxWidth: 280,
+                flexShrink: 0,
+              }}
+            >
+              <ProgramCard program={program} />
+            </Box>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 }

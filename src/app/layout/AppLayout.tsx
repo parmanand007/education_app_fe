@@ -26,7 +26,7 @@ export default function AppLayout() {
             overflowY: "auto",
             px: 4,
             py: 4,
-            backgroundColor: "background.default",
+            backgroundColor: "background.paper",
 
             "&::-webkit-scrollbar": { display: "none" },
             scrollbarWidth: "none",

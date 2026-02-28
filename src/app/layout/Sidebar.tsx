@@ -37,23 +37,13 @@ interface NavItem {
 
 export default function Sidebar() {
   const location = useLocation();
-  const [openTournament, setOpenTournament] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
 
-  // ✅ STRICT dashboard match
   const isActive = (path?: string) => {
     if (!path) return false;
     if (path === "/") return location.pathname === "/";
     return location.pathname.startsWith(path);
   };
-
-  useEffect(() => {
-    if (
-      location.pathname.startsWith("/contests") ||
-      location.pathname.startsWith("/leaderboard")
-    ) {
-      setOpenTournament(true);
-    }
-  }, [location.pathname]);
 
   const navSections: { title: string; items: NavItem[] }[] = [
     {
@@ -97,6 +87,21 @@ export default function Sidebar() {
     },
   ];
 
+  // Auto-expand parent if child route active
+  useEffect(() => {
+    navSections.forEach((section) => {
+      section.items.forEach((item) => {
+        if (
+          item.children?.some((child) =>
+            location.pathname.startsWith(child.path || "")
+          )
+        ) {
+          setOpenMenu(item.label);
+        }
+      });
+    });
+  }, [location.pathname]);
+
   return (
     <Box
       sx={{
@@ -125,6 +130,7 @@ export default function Sidebar() {
 
           <List disablePadding>
             {section.items.map((item) => {
+              // Collapsible menu
               if (item.children) {
                 const childActive = item.children.some((c) =>
                   isActive(c.path)
@@ -133,7 +139,9 @@ export default function Sidebar() {
                 return (
                   <Box key={item.label}>
                     <ListItemButton
-                      onClick={() => setOpenTournament(!openTournament)}
+                      onClick={() =>
+                        setOpenMenu(openMenu === item.label ? null : item.label)
+                      }
                       sx={{
                         borderRadius: 2,
                         mb: 0.5,
@@ -160,10 +168,10 @@ export default function Sidebar() {
                         }}
                       />
 
-                      {openTournament ? <ExpandLess /> : <ExpandMore />}
+                      {openMenu === item.label ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
 
-                    <Collapse in={openTournament}>
+                    <Collapse in={openMenu === item.label}>
                       <List component="div" disablePadding>
                         {item.children.map((child) => (
                           <ListItemButton
@@ -194,11 +202,13 @@ export default function Sidebar() {
                 );
               }
 
+              // Normal item
               return (
                 <ListItemButton
                   key={item.label}
                   component={NavLink}
                   to={item.path || ""}
+                  end={item.path === "/"}   // strict root match
                   sx={{
                     borderRadius: 2,
                     mb: 0.5,
