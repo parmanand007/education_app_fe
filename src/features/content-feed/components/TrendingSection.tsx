@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import FeedCard from "./FeedCard";
+import TrendingFeedCard from "./TrendingFeedCard";
 import FeedSectionWrapper from "./FeedSectionWrapper";
 import { useContentFeed } from "../api/contentFeed.hooks";
 
@@ -21,7 +21,7 @@ export default function TrendingSection() {
         }}
       >
         {items.map((item) => (
-          <FeedCard key={item.feed.id} item={item} />
+          <TrendingFeedCard key={item.feed.id} item={item} />
         ))}
       </Box>
     </FeedSectionWrapper>

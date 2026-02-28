@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import FeedCard from "./FeedCard";
 import FeedSectionWrapper from "./FeedSectionWrapper";
 import { useContentFeed } from "../api/contentFeed.hooks";
+import FeedCard from "./FeedCard";
 
 export default function ArticleSection() {
   const { data } = useContentFeed({
