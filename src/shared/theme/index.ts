@@ -4,14 +4,17 @@ declare module "@mui/material/styles" {
   interface Palette {
     brand: {
       light: string;
+      main: string;
       dark: string;
       muted: string;
       tag: string;
     };
   }
+
   interface PaletteOptions {
     brand?: {
       light?: string;
+      main?: string;
       dark?: string;
       muted?: string;
       tag?: string;
@@ -21,6 +24,8 @@ declare module "@mui/material/styles" {
 
 export const theme = createTheme({
   palette: {
+    mode: "light",
+
     primary: {
       main: "#1ea7d7",
     },
@@ -35,11 +40,14 @@ export const theme = createTheme({
       secondary: "#6b7280",
     },
 
+    divider: "#e5e7eb",
+
     brand: {
       light: "#eaf4fb",
+      main: "#1ea7d7",
       dark: "#0f6f91",
       muted: "#b9e3f7",
-      tag:"#133e63",
+      tag: "#133e63",
     },
   },
 
@@ -52,25 +60,11 @@ export const theme = createTheme({
   typography: {
     fontFamily: "Inter, Roboto, sans-serif",
 
-    h4: {
-      fontWeight: 600,
-    },
+    h4: { fontWeight: 600 },
+    h5: { fontWeight: 600 },
+    h6: { fontWeight: 600 },
 
-    h5: {
-      fontWeight: 600,
-    },
-
-    h6: {
-      fontWeight: 600,
-    },
-
-    subtitle1: {
-      fontWeight: 500,
-    },
-
-    body1: {
-      color: "#4a4a4a",
-    },
+    subtitle1: { fontWeight: 500 },
 
     button: {
       textTransform: "none",
@@ -79,20 +73,19 @@ export const theme = createTheme({
   },
 
   components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 10,
-          paddingLeft: 16,
-          paddingRight: 16,
-        },
-      },
-    },
-
     MuiPaper: {
       styleOverrides: {
         root: {
           borderRadius: 16,
+        },
+      },
+    },
+
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 10,
+          paddingInline: 16,
         },
       },
     },
@@ -110,6 +103,15 @@ export const theme = createTheme({
         root: {
           borderRadius: 8,
           fontWeight: 500,
+        },
+      },
+    },
+
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 16,
+          border: "1px solid #e5e7eb",
         },
       },
     },
