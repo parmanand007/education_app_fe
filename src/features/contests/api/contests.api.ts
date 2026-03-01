@@ -1,5 +1,5 @@
 import { apiClient } from "../../../services/apiClient";
-import type { Contest, PaginatedResponse } from "./contests.types";
+import type { Contest, PaginatedResponse, TournamentQueryParams, TournamentResponse, WalletLevel } from "./contests.types";
 
 export interface ContestQueryParams {
   status?: number[];
@@ -18,3 +18,20 @@ export const fetchContests = async (
 
   return data;
 };
+
+export const fetchTournaments = async (
+  params?: TournamentQueryParams
+): Promise<TournamentResponse> => {
+  const { data } = await apiClient.get("/v2/tournaments/", {
+    params,
+  })
+
+  return data
+}
+
+
+
+export const fetchWalletLevel = async (): Promise<WalletLevel> => {
+  const { data } = await apiClient.get("/v1/nps/wallet/level/")
+  return data
+}
