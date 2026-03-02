@@ -1,65 +1,153 @@
-import { Box, Typography, CircularProgress } from "@mui/material"
-import { useState } from "react"
-import TournamentHero from "../components/TournamentHero"
-import ContestGrid from "../components/ContestGrid"
-import { useTournaments } from "../api/contests.hooks"
-import ContestModuleSummary from "../components/ContestModuleSummary"
+import { Box, Typography, CircularProgress } from "@mui/material";
+import { useState, useMemo, useEffect } from "react";
+import TournamentHero from "../components/TournamentHero";
+import ContestModuleSummary from "../components/ContestModuleSummary";
+import ContestFilters from "../components/ContestFilters";
+import ContestGrid from "../components/ContestGrid";
+import { useTournaments, useContests } from "../api/contests.hooks";
 
 export default function ContestsPage() {
-  const [page, setPage] = useState(1)
+  /* Tournament Pagination */
+  const [tournamentPage, setTournamentPage] = useState(1);
 
-  const pageSize = 1
+  /* Contest Filters */
+  const [filters, setFilters] = useState({
+    ordering: "-start_date",
+    assignment_type: [] as string[],
+    status: [] as number[],
+    page: 1,
+  });
 
-  const { data, isLoading, isError } = useTournaments({
+  /* -------------------- TOURNAMENT QUERY -------------------- */
+
+  const {
+    data: tournamentData,
+    isLoading: tournamentLoading,
+  } = useTournaments({
     status: "active",
-    page,
-    page_size: pageSize,
-  })
+    page: tournamentPage,
+    page_size: 1,
+  });
 
-  if (isLoading) {
+  const tournament = tournamentData?.results?.[0];
+
+  /* Reset contest page when tournament changes */
+  useEffect(() => {
+    setFilters((prev) => ({
+      ...prev,
+      page: 1,
+    }));
+  }, [tournament?.tournament_id]);
+
+  /* -------------------- CONTEST QUERY PARAMS -------------------- */
+
+  const contestParams = useMemo(() => {
+    if (!tournament?.tournament_id) return undefined;
+
+    return {
+      tournament_id: tournament.tournament_id,
+      ordering: filters.ordering,
+      assignment_type: filters.assignment_type,
+      status: filters.status,
+      page: filters.page,
+      page_size: 10,
+    };
+  }, [
+    tournament?.tournament_id,
+    filters.ordering,
+    filters.assignment_type,
+    filters.status,
+    filters.page,
+  ]);
+
+  const {
+    data: contestData,
+    isLoading: contestLoading,
+  } = useContests(contestParams);
+
+  /* -------------------- HANDLERS -------------------- */
+
+  const handleFilterChange = (field: string, value: any) => {
+    setFilters((prev) => ({
+      ...prev,
+      [field]: value,
+      page: 1,
+    }));
+  };
+
+  /* -------------------- LOADING STATES -------------------- */
+
+  if (tournamentLoading) {
     return (
       <Box display="flex" justifyContent="center" mt={6}>
         <CircularProgress />
       </Box>
-    )
+    );
   }
 
-  if (isError || !data?.results?.length) {
+  if (!tournament) {
     return (
       <Typography mt={4}>
         No active tournament found.
       </Typography>
-    )
+    );
   }
 
-  const tournament = data.results[0]
-  const totalPages = Math.ceil(data.count / pageSize)
+  const totalTournamentPages = Math.ceil(
+    (tournamentData?.count ?? 1) / 1
+  );
+
+  /* -------------------- RENDER -------------------- */
 
   return (
-    <Box >
+    <Box sx={{ px: 3, pb: 6 }}>
+      {/* Tournament Hero */}
       <TournamentHero
         name={tournament.name}
         startDate={tournament.start_date}
         endDate={tournament.end_date}
-        currentIndex={page}
-        total={totalPages}
-        onPrev={() => setPage((p) => Math.max(p - 1, 1))}
+        currentIndex={tournamentPage}
+        total={totalTournamentPages}
+        onPrev={() =>
+          setTournamentPage((p) => Math.max(p - 1, 1))
+        }
         onNext={() =>
-          setPage((p) =>
-            Math.min(p + 1, totalPages)
+          setTournamentPage((p) =>
+            Math.min(p + 1, totalTournamentPages)
           )
         }
       />
+
+      {/* Wallet / Summary Section */}
       <ContestModuleSummary />
 
-      <Box mt={4}>
-        <Typography sx={{ fontSize: 20, fontWeight: 600, mb: 3 }}>
-          My Contests
-        </Typography>
+      {/* Contest Section */}
+      <Box mt={5}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={3}
+          flexWrap="wrap"
+          gap={2}
+        >
+          <Typography fontSize={22} fontWeight={600}>
+            My Contests
+          </Typography>
 
-        {/* <ContestGrid tournamentId={tournament.tournament_id} /> */}
-        <ContestGrid  />
+          <ContestFilters
+            ordering={filters.ordering}
+            assignmentType={filters.assignment_type}
+            status={filters.status}
+            onChange={handleFilterChange}
+          />
+        </Box>
+
+        <ContestGrid
+          contests={contestData?.results ?? []}
+          loading={contestLoading}
+        />
       </Box>
     </Box>
-  )
+  );
 }

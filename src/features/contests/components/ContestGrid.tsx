@@ -1,9 +1,31 @@
-import { Box } from "@mui/material";
-import { useContests } from "../api/contests.hooks";
+import { Box, Typography, CircularProgress } from "@mui/material";
+import { Contest } from "../api/contests.types";
 import ContestCard from "./ContestCard";
 
-export default function ContestGrid() {
-  const { data } = useContests({ status: [0, 2, 3] });
+interface Props {
+  contests: Contest[];
+  loading: boolean;
+}
+
+export default function ContestGrid({
+  contests,
+  loading,
+}: Props) {
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" mt={4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (!contests.length) {
+    return (
+      <Typography mt={4}>
+        No contests found.
+      </Typography>
+    );
+  }
 
   return (
     <Box
@@ -14,11 +36,11 @@ export default function ContestGrid() {
           xs: "1fr",
           sm: "repeat(2, 1fr)",
           md: "repeat(3, 1fr)",
-          lg: "repeat(5, 1fr)",  // ← 5 per row like production
+          lg: "repeat(5, 1fr)",
         },
       }}
     >
-      {data?.results.map((contest) => (
+      {contests.map((contest) => (
         <ContestCard
           key={contest.questionnaire_id}
           contest={contest}
