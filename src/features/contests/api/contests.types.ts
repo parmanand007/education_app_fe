@@ -12,8 +12,18 @@ export interface Contest {
   status: number;
   redeem_allowed: boolean;
   points_to_unlock: number | null;
+  assignment_type: string;
 
   current_submission: SubmissionData | null;
+}
+
+export interface ContestQueryParams {
+  status?: number[];
+  assignment_type?: string[];
+  ordering?: string;
+  tournament_id?: string;
+  page?: number;
+  page_size?: number;
 }
 
 export interface PaginatedResponse<T> {

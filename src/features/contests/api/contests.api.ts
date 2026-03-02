@@ -1,10 +1,5 @@
 import { apiClient } from "../../../services/apiClient";
-import type { Contest, PaginatedResponse, TournamentQueryParams, TournamentResponse, WalletLevel } from "./contests.types";
-
-export interface ContestQueryParams {
-  status?: number[];
-  tournament_id?: string;
-}
+import type { Contest, ContestQueryParams, PaginatedResponse, TournamentQueryParams, TournamentResponse, WalletLevel } from "./contests.types";
 
 export const fetchContests = async (
   params?: ContestQueryParams

@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchContests, fetchTournaments, fetchWalletLevel } from "./contests.api";
-import type { ContestQueryParams } from "./contests.api";
-import { TournamentQueryParams, TournamentResponse, WalletLevel } from "./contests.types";
-import { getTournamentQueryKey } from "./contests.queryKey";
+import { ContestQueryParams, TournamentQueryParams, TournamentResponse, WalletLevel } from "./contests.types";
+import { getContestQueryKey, getTournamentQueryKey } from "./contests.queryKey";
 
 export const useContests = (params?: ContestQueryParams) => {
   return useQuery({
-    queryKey: ["contests", params],
+    queryKey: getContestQueryKey(params),
     queryFn: () => fetchContests(params),
+    placeholderData: (prev) => prev, // smooth pagination
+    staleTime: 1000 * 60 * 2, // cache for 2 minutes
   });
 };
-
 
 
 export const useTournaments = (
