@@ -2,20 +2,22 @@ import {
   Box,
   Typography,
   IconButton,
-} from "@mui/material"
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
-import ChevronRightIcon from "@mui/icons-material/ChevronRight"
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
-import dayjs from "dayjs"
+} from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import dayjs from "dayjs";
 
 interface Props {
-  name: string
-  startDate: string
-  endDate: string
-  currentIndex: number
-  total: number
-  onPrev: () => void
-  onNext: () => void
+  name: string;
+  startDate: string;
+  endDate: string;
+  currentIndex: number;
+  total: number;
+  onPrev: () => void;
+  onNext: () => void;
+  variant?: "contest" | "leaderboard";
+  action?: React.ReactNode;
 }
 
 export default function TournamentHero({
@@ -26,27 +28,46 @@ export default function TournamentHero({
   total,
   onPrev,
   onNext,
+  variant = "contest",
+  action,
 }: Props) {
-  const formattedStart = dayjs(startDate).format("DD MMM, YYYY")
-  const formattedEnd = dayjs(endDate).format("DD MMM, YYYY")
+  const formattedStart = dayjs(startDate).format("DD MMM, YYYY");
+  const formattedEnd = dayjs(endDate).format("DD MMM, YYYY");
+
+  const isLeaderboard = variant === "leaderboard";
 
   return (
     <Box
       sx={{
-        backgroundColor: "#e8c27a",
-        borderRadius: 0.8,
+        backgroundColor: isLeaderboard ? "#dceaf2" : "#e8c27a",
+        borderRadius: 2,
         p: 5,
         position: "relative",
         overflow: "hidden",
       }}
     >
+      {/* Action (Filter Button) */}
+      {action && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 24,
+            right: 24,
+          }}
+        >
+          {action}
+        </Box>
+      )}
+
       {/* Header */}
       <Typography variant="h5" fontWeight={700}>
-        Tournament & Contests
+        {isLeaderboard ? "My Leaderboard" : "Tournament & Contests"}
       </Typography>
 
       <Typography mt={1} color="text.secondary">
-        Track your tournament and contest details effortlessly with our comprehensive dashboard.
+        {isLeaderboard
+          ? "Your personal dashboard for tournaments and contests. Track rankings, compare scores with peers, and share reactions in real time."
+          : "Track your tournament and contest details effortlessly with our comprehensive dashboard."}
       </Typography>
 
       {/* Tournament Row */}
@@ -59,9 +80,13 @@ export default function TournamentHero({
         <Box>
           <Box display="flex" alignItems="center" gap={1}>
             <InfoOutlinedIcon sx={{ fontSize: 16, opacity: 0.7 }} />
+
             <Typography
               variant="caption"
-              sx={{ fontWeight: 600, letterSpacing: 1 }}
+              sx={{
+                fontWeight: 600,
+                letterSpacing: 1,
+              }}
             >
               TOURNAMENT
             </Typography>
@@ -96,31 +121,35 @@ export default function TournamentHero({
         </Box>
       </Box>
 
-      {/* Unified Info Container */}
-        <Box
-  mt={3}
-  sx={{
-    display: "flex",
-    backgroundColor: "#efd6a1",
-    borderRadius: 0.8,
-    overflow: "hidden",
-    width: "fit-content",
-    borderTop: "1px solid rgba(255,255,255,0.9)",
-    borderLeft: "1px solid rgba(255,255,255,0.9)",
-    borderRight: "1px solid rgba(255,255,255,0.9)",
-    boxShadow: "0 3px 0 rgba(255,255,255,0.9)", 
-  }}
->
+      {/* Info Container */}
+      <Box
+        mt={3}
+        sx={{
+          display: "flex",
+          backgroundColor: isLeaderboard ? "#edf5f9" : "#efd6a1",
+          borderRadius: 2,
+          overflow: "hidden",
+          width: "fit-content",
+          borderTop: "1px solid rgba(255,255,255,0.9)",
+          borderLeft: "1px solid rgba(255,255,255,0.9)",
+          borderRight: "1px solid rgba(255,255,255,0.9)",
+          boxShadow: "0 3px 0 rgba(255,255,255,0.9)",
+        }}
+      >
         <InfoBlock
           title="TOURNAMENT STARTED ON:"
           value={formattedStart}
         />
+
         <DividerBlock />
+
         <InfoBlock
           title="TOURNAMENT CLOSE ON:"
           value={formattedEnd}
         />
+
         <DividerBlock />
+
         <InfoBlock
           title="CURRENT PROGRESS"
           value="Week 1 of 5"
@@ -135,30 +164,16 @@ export default function TournamentHero({
       >
         Note: This configuration dates are managed by org admins
       </Typography>
-
-      {/* Decorative Stars */}
-      <Box
-        sx={{
-          position: "absolute",
-          right: 60,
-          top: 40,
-          width: 120,
-          height: 120,
-          background: "radial-gradient(circle at center, rgba(255,255,255,0.4), transparent)",
-          opacity: 0.4,
-          pointerEvents: "none",
-        }}
-      />
     </Box>
-  )
+  );
 }
 
 function InfoBlock({
   title,
   value,
 }: {
-  title: string
-  value: string
+  title: string;
+  value: string;
 }) {
   return (
     <Box
@@ -168,14 +183,18 @@ function InfoBlock({
         minWidth: 220,
       }}
     >
-      <Typography variant="caption" sx={{ opacity: 0.7 }}>
+      <Typography
+        variant="caption"
+        sx={{ opacity: 0.7 }}
+      >
         {title}
       </Typography>
+
       <Typography fontWeight={700}>
         {value}
       </Typography>
     </Box>
-  )
+  );
 }
 
 function DividerBlock() {
@@ -186,5 +205,5 @@ function DividerBlock() {
         backgroundColor: "rgba(255,255,255,0.8)",
       }}
     />
-  )
+  );
 }

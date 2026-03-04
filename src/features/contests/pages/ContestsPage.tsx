@@ -103,6 +103,7 @@ export default function ContestsPage() {
     <Box sx={{ px: 3, pb: 6 }}>
       {/* Tournament Hero */}
       <TournamentHero
+       variant="contest"
         name={tournament.name}
         startDate={tournament.start_date}
         endDate={tournament.end_date}
@@ -117,6 +118,7 @@ export default function ContestsPage() {
           )
         }
       />
+      
 
       {/* Wallet / Summary Section */}
       <ContestModuleSummary />
