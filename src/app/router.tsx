@@ -10,6 +10,7 @@ import ContentFeedPage from "../features/content-feed/pages/ContentFeedPage";
 import ProviderScorecardPage from "../features/provider-scorecard/pages/ProviderScorecardPage";
 import ICDCodeSearchPage from "../features/icd10/pages/ICDCodeSearchPage";
 import LeaderboardPage from "../features/leaderboard/pages/LeaderboardPage";
+import QuestionReviewPage from "../features/questionReview/pages/QuestionReviewPage";
 
 export function AppRouter() {
   const token = useAuthStore((s) => s.token);
@@ -38,6 +39,7 @@ export function AppRouter() {
         <Route path="provider-scorecard" element={<ProviderScorecardPage /> } />
         <Route path="icd10" element={<ICDCodeSearchPage />} />
         <Route path="leaderboard" element={<LeaderboardPage />} />
+        <Route path="/question-review" element={<QuestionReviewPage />} />
 
          {/* Learning */}
         <Route path="programs" element={<MyProgramsPage />} />
