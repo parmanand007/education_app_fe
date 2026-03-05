@@ -14,6 +14,7 @@ import QuestionReviewPage from "../features/questionReview/pages/QuestionReviewP
 import QuestionBookmarkPage from "../features/bookmark/pages/BookmarkPage";
 import AchievementsPage from "../features/achievements/pages/AchievementPage";
 import DTPointsPage from "../features/dtPoints/pages/DTPointsPage";
+import CMETrackingPage from "../features/cmeTracking/pages/CMETrackingPage";
 
 export function AppRouter() {
   const token = useAuthStore((s) => s.token);
@@ -46,6 +47,7 @@ export function AppRouter() {
         <Route path="/question-bookmark" element={<QuestionBookmarkPage />} />
         <Route path="/achievements" element={<AchievementsPage />} />
         <Route path="/dt-points" element={<DTPointsPage />} />
+        <Route path="/cme-tracking" element={<CMETrackingPage />} />
 
          {/* Learning */}
         <Route path="programs" element={<MyProgramsPage />} />
