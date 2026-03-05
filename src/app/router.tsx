@@ -13,6 +13,7 @@ import LeaderboardPage from "../features/leaderboard/pages/LeaderboardPage";
 import QuestionReviewPage from "../features/questionReview/pages/QuestionReviewPage";
 import QuestionBookmarkPage from "../features/bookmark/pages/BookmarkPage";
 import AchievementsPage from "../features/achievements/pages/AchievementPage";
+import DTPointsPage from "../features/dtPoints/pages/DTPointsPage";
 
 export function AppRouter() {
   const token = useAuthStore((s) => s.token);
@@ -44,6 +45,7 @@ export function AppRouter() {
         <Route path="/question-review" element={<QuestionReviewPage />} />
         <Route path="/question-bookmark" element={<QuestionBookmarkPage />} />
         <Route path="/achievements" element={<AchievementsPage />} />
+        <Route path="/dt-points" element={<DTPointsPage />} />
 
          {/* Learning */}
         <Route path="programs" element={<MyProgramsPage />} />
