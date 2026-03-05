@@ -119,17 +119,27 @@ export default function AchievementCard({ program }: Props) {
 
           <Typography>•</Typography>
 
-          <Stack direction="row" spacing={0.5} alignItems="center">
-            <MenuBookIcon sx={{ fontSize: 16 }} />
-            <Typography>{program.no_of_modules} Modules</Typography>
-          </Stack>
+       <Stack
+  direction="row"
+  spacing={0.5}
+  alignItems="center"
+  sx={{ whiteSpace: "nowrap" }}
+>
+  <MenuBookIcon sx={{ fontSize: 14 }} />
+  <Typography
+    variant="body2"
+    sx={{ whiteSpace: "nowrap" }}
+  >
+    {program.no_of_modules} Modules
+  </Typography>
+</Stack>
 
           {program.certificate && (
             <>
               <Typography>•</Typography>
 
               <Stack direction="row" spacing={0.5} alignItems="center">
-                <WorkspacePremiumIcon sx={{ fontSize: 16 }} />
+                <WorkspacePremiumIcon sx={{ fontSize: 12 }} />
                 <Typography>Certificate</Typography>
               </Stack>
             </>
