@@ -12,6 +12,7 @@ import ICDCodeSearchPage from "../features/icd10/pages/ICDCodeSearchPage";
 import LeaderboardPage from "../features/leaderboard/pages/LeaderboardPage";
 import QuestionReviewPage from "../features/questionReview/pages/QuestionReviewPage";
 import QuestionBookmarkPage from "../features/bookmark/pages/BookmarkPage";
+import AchievementsPage from "../features/achievements/pages/AchievementPage";
 
 export function AppRouter() {
   const token = useAuthStore((s) => s.token);
@@ -42,6 +43,7 @@ export function AppRouter() {
         <Route path="leaderboard" element={<LeaderboardPage />} />
         <Route path="/question-review" element={<QuestionReviewPage />} />
         <Route path="/question-bookmark" element={<QuestionBookmarkPage />} />
+        <Route path="/achievements" element={<AchievementsPage />} />
 
          {/* Learning */}
         <Route path="programs" element={<MyProgramsPage />} />
