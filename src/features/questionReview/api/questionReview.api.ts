@@ -31,6 +31,9 @@ export const fetchQuestionReviews = async (
   if (filters.end_date) {
     params.append("end_date", filters.end_date);
   }
+  if (filters.question_status_sort) {
+    params.append("question_status_sort", filters.question_status_sort);
+  }
 
   const response = await apiClient.get<QuestionReviewResponse>(
     `/v2/question/review/programs/?${params.toString()}`

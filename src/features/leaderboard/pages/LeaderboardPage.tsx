@@ -38,7 +38,7 @@ export default function LeaderboardPage() {
     useLeaderboard(leaderboardParams);
 
   return (
-    <Box sx={{ px: 3, pb: 6 }}>
+    <Box sx={{ px: 1, pb: 6 }}>
       {tournament && (
         <TournamentHero
           variant="leaderboard"

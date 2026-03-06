@@ -58,9 +58,13 @@ export default function LeaderboardFilter({
         onClick={handleOpen}
         sx={{
           textTransform: "none",
-          borderRadius: 2,
+          borderRadius: 0.5,
           height: 40,
           px: 2,
+          borderColor:"text.primary",
+          color: "text.secondary",
+          fontWeight: 400
+
         }}
       >
         Filter

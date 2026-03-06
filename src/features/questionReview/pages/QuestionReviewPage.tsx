@@ -1,9 +1,19 @@
-import { Box, Typography, CircularProgress } from "@mui/material"
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Select,
+  MenuItem
+} from "@mui/material"
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import { useState } from "react"
 
 import { useQuestionReviews } from "../api/questionReview.hooks"
 import QuestionReviewCard from "../components/QuestionReviewCard"
-import { QuestionReviewFilters as QuestionReviewFiltersType } from "../api/questionReview.types"
+import {
+  QuestionReviewFilters as QuestionReviewFiltersType,
+  QuestionStatusSort
+} from "../api/questionReview.types"
 import QuestionReviewFiltersSection from "../components/QuestionReviewFilters"
 
 export default function QuestionReviewPage() {
@@ -14,14 +24,24 @@ export default function QuestionReviewPage() {
     learning_points: [],
     programs: [],
     start_date: "",
-    end_date: ""
+    end_date: "",
+    question_status_sort: "all"
   })
 
   const { data, isLoading } = useQuestionReviews(filters)
 
+  const handleSortChange = (value: QuestionStatusSort) => {
+    setFilters((prev) => ({
+      ...prev,
+      page: 1,
+      question_status_sort: value
+    }))
+  }
+
   return (
     <Box maxWidth={1200}>
 
+      {/* Page Header */}
       <Typography variant="h5" fontWeight={600}>
         Review Answers
       </Typography>
@@ -30,16 +50,69 @@ export default function QuestionReviewPage() {
         Access and evaluate your submissions across Doctustech.
       </Typography>
 
+      {/* Filters */}
       <QuestionReviewFiltersSection
         filters={filters}
         setFilters={setFilters}
       />
 
+      {/* Sort + Results Bar */}
+      <Box
+        mt={2}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 3,
+          px: 2,
+          py: 1,
+          backgroundColor: "brand.light",
+          borderRadius: 2,
+          width: "fit-content"
+        }}
+      >
+
+        {/* Sort */}
+        <Box display="flex" alignItems="center">
+
+          <Typography fontSize={14} sx={{ mr: 1 }}>
+            Sort By:
+          </Typography>
+
+          <Select
+            value={filters.question_status_sort ?? "all"}
+            onChange={(e) =>
+              handleSortChange(e.target.value as QuestionStatusSort)
+            }
+            variant="standard"
+            disableUnderline
+            IconComponent={KeyboardArrowDownIcon}
+            sx={{
+              fontSize: 14,
+              fontWeight: 600,
+              color: "brand.tag",
+              minWidth: 120
+            }}
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="correct">Correct Answer</MenuItem>
+            <MenuItem value="incorrect">Incorrect Answer</MenuItem>
+          </Select>
+
+        </Box>
+
+        {/* Results Count */}
+        <Typography fontSize={14}>
+          Showing <b>{data?.count ?? 0}</b> results
+        </Typography>
+
+      </Box>
+
+      {/* Question List */}
       <Box mt={4}>
 
         {isLoading && <CircularProgress />}
 
-        {data?.results.map((question) => (
+        {data?.results?.map((question) => (
           <QuestionReviewCard
             key={question.question_id}
             question={question}

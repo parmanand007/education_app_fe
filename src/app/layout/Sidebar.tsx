@@ -165,6 +165,9 @@ export default function Sidebar() {
                         primary={item.label}
                         primaryTypographyProps={{
                           fontWeight: childActive ? 600 : 500,
+                          color: childActive
+                            ? "primary.main"
+                            : "text.secondary",
                         }}
                       />
 
@@ -232,6 +235,9 @@ export default function Sidebar() {
                     primary={item.label}
                     primaryTypographyProps={{
                       fontWeight: isActive(item.path) ? 600 : 400,
+                      color: isActive(item.path)
+                            ? "primary.main"
+                            : "text.secondary",
                     }}
                   />
                 </ListItemButton>
