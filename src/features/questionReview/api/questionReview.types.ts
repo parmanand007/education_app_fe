@@ -63,6 +63,8 @@ export interface LearningPointFilterResponse {
   results: string[];
 }
 
+export type QuestionStatusSort = "all" | "correct" | "incorrect";
+
 export interface QuestionReviewFilters {
   page: number;
   page_size: number;
@@ -70,6 +72,7 @@ export interface QuestionReviewFilters {
   learning_points: string[];
   start_date?: string;
   end_date?: string;
+  question_status_sort?: QuestionStatusSort;
 }
 
 

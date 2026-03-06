@@ -37,7 +37,13 @@ export default function QuestionReviewCard({ question }: Props) {
 
       <Box mt={1} display="flex" gap={1}>
         <Chip label="Program" size="small" color="warning" />
-        <Chip label={question.category[0]} size="small" color="info" />
+        {question.category?.length > 0 && (
+  <Chip
+    label={question.category[0]}
+    size="small"
+    color="info"
+  />
+)}
       </Box>
 
       <Typography mt={2} fontSize={14}>

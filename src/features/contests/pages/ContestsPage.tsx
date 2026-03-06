@@ -100,7 +100,7 @@ export default function ContestsPage() {
   /* -------------------- RENDER -------------------- */
 
   return (
-    <Box sx={{ px: 3, pb: 6 }}>
+    <Box sx={{ px: 1, pb: 6 }}>
       {/* Tournament Hero */}
       <TournamentHero
        variant="contest"

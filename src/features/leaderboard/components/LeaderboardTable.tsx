@@ -41,7 +41,7 @@ export default function LeaderboardTable({ data }: Props) {
     <Paper
       elevation={0}
       sx={{
-        borderRadius: 3,
+        borderRadius: 1.5,
         border: "1px solid #D0D5DD",
         overflow: "hidden",
       }}
@@ -51,8 +51,8 @@ export default function LeaderboardTable({ data }: Props) {
         sx={{
           display: "grid",
           gridTemplateColumns: "120px 1.5fr 1fr 180px",
-          backgroundColor: "#F2F4F7",
-          borderBottom: "1px solid #D0D5DD",
+          backgroundColor: "#dceaf2",
+          borderBottom: "4px solid #D0D5DD",
         }}
       >
         {["# Rank", "Name", "Reaction", "Total Points"].map(
@@ -66,7 +66,7 @@ export default function LeaderboardTable({ data }: Props) {
                 fontSize: 14,
                 borderRight:
                   title !== "Total Points"
-                    ? "1px solid #D0D5DD"
+                    ? "2px solid #D0D5DD"
                     : "none",
               }}
             >

@@ -40,8 +40,8 @@ export default function TournamentHero({
     <Box
       sx={{
         backgroundColor: isLeaderboard ? "#dceaf2" : "#e8c27a",
-        borderRadius: 2,
-        p: 5,
+        borderRadius: 1.5,
+        p: 2,
         position: "relative",
         overflow: "hidden",
       }}
@@ -71,77 +71,88 @@ export default function TournamentHero({
       </Typography>
 
       {/* Tournament Row */}
-      <Box
-        mt={4}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
+<Box
+  mt={4}
+  position="relative"
+  display="flex"
+  alignItems="center"
+>
+  {/* Left Section */}
+  <Box>
+    <Box display="flex" alignItems="center" gap={1}>
+      <InfoOutlinedIcon sx={{ fontSize: 16, opacity: 0.7 }} />
+
+      <Typography
+        variant="caption"
+        sx={{
+          fontWeight: 600,
+          letterSpacing: 1,
+        }}
       >
-        <Box>
-          <Box display="flex" alignItems="center" gap={1}>
-            <InfoOutlinedIcon sx={{ fontSize: 16, opacity: 0.7 }} />
+        TOURNAMENT
+      </Typography>
+    </Box>
 
-            <Typography
-              variant="caption"
-              sx={{
-                fontWeight: 600,
-                letterSpacing: 1,
-              }}
-            >
-              TOURNAMENT
-            </Typography>
-          </Box>
+    <Typography mt={0.5} fontWeight={700}>
+      {name}
+    </Typography>
+  </Box>
 
-          <Typography mt={0.5} fontWeight={700}>
-            {name}
-          </Typography>
-        </Box>
+  {/* Center Pagination */}
+  <Box
+    sx={{
+      position: "absolute",
+      left: "50%",
+      transform: "translateX(-50%)",
+      display: "flex",
+      alignItems: "center",
+    }}
+  >
+    <IconButton
+      onClick={onPrev}
+      disabled={currentIndex === 1}
+      size="small"
+    >
+      <ChevronLeftIcon fontSize="small" />
+    </IconButton>
 
-        {/* Pagination */}
-        <Box display="flex" alignItems="center">
-          <IconButton
-            onClick={onPrev}
-            disabled={currentIndex === 1}
-            size="small"
-          >
-            <ChevronLeftIcon fontSize="small" />
-          </IconButton>
+    <Typography mx={1} fontWeight={600}>
+      {currentIndex} / {total}
+    </Typography>
 
-          <Typography mx={1} fontWeight={600}>
-            {currentIndex} / {total}
-          </Typography>
-
-          <IconButton
-            onClick={onNext}
-            disabled={currentIndex === total}
-            size="small"
-          >
-            <ChevronRightIcon fontSize="small" />
-          </IconButton>
-        </Box>
-      </Box>
+    <IconButton
+      onClick={onNext}
+      disabled={currentIndex === total}
+      size="small"
+    >
+      <ChevronRightIcon fontSize="small" />
+    </IconButton>
+  </Box>
+</Box>
 
       {/* Info Container */}
       <Box
         mt={3}
         sx={{
-          display: "flex",
-          backgroundColor: isLeaderboard ? "#edf5f9" : "#efd6a1",
-          borderRadius: 2,
-          overflow: "hidden",
-          width: "fit-content",
-          borderTop: "1px solid rgba(255,255,255,0.9)",
-          borderLeft: "1px solid rgba(255,255,255,0.9)",
-          borderRight: "1px solid rgba(255,255,255,0.9)",
-          boxShadow: "0 3px 0 rgba(255,255,255,0.9)",
-        }}
+  display: "flex",
+  backgroundColor: isLeaderboard ? "#edf5f9" : "#efd6a1",
+  borderRadius: 1,
+  overflow: "hidden",
+  width: "fit-content",
+
+  borderTop: `1px solid ${isLeaderboard ? "#b6d6e5" : "rgba(255,255,255,0.9)"}`,
+  borderLeft: `1px solid ${isLeaderboard ? "#b6d6e5" : "rgba(255,255,255,0.9)"}`,
+  borderRight: `1px solid ${isLeaderboard ? "#b6d6e5" : "rgba(255,255,255,0.9)"}`,
+
+  boxShadow: `0 3px 0 ${isLeaderboard ? "#b6d6e5" : "rgba(255,255,255,0.9)"}`,
+}}
       >
         <InfoBlock
           title="TOURNAMENT STARTED ON:"
           value={formattedStart}
         />
 
-        <DividerBlock />
+        <DividerBlock/>
 
         <InfoBlock
           title="TOURNAMENT CLOSE ON:"
@@ -157,13 +168,16 @@ export default function TournamentHero({
       </Box>
 
       {/* Note */}
+      <Box sx={{display:"flex", alignItems:"center",mt:2, gap:1, color:"primary.main"}}>
+        <InfoOutlinedIcon sx={{ fontSize: 16, opacity: 0.7 }} />
       <Typography
-        mt={3}
+        
         variant="caption"
         sx={{ opacity: 0.8 }}
       >
         Note: This configuration dates are managed by org admins
       </Typography>
+      </Box>
     </Box>
   );
 }
@@ -201,7 +215,7 @@ function DividerBlock() {
   return (
     <Box
       sx={{
-        width: "1px",
+        width: "4px",
         backgroundColor: "rgba(255,255,255,0.8)",
       }}
     />
