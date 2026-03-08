@@ -168,7 +168,13 @@ export default function TournamentHero({
       </Box>
 
       {/* Note */}
-      <Box sx={{display:"flex", alignItems:"center",mt:2, gap:1, color:"primary.main"}}>
+      <Box  sx={{
+    display: "flex",
+    alignItems: "center",
+    mt: 2,
+    gap: 1,
+    color: isLeaderboard ? "primary.main" : "text.primary",
+  }}>
         <InfoOutlinedIcon sx={{ fontSize: 16, opacity: 0.7 }} />
       <Typography
         
