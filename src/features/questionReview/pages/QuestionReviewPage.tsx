@@ -57,56 +57,70 @@ export default function QuestionReviewPage() {
       />
 
       {/* Sort + Results Bar */}
-      <Box
-        mt={2}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: 3,
-          px: 2,
-          py: 1,
-          backgroundColor: "brand.light",
-          borderRadius: 2,
-          width: "fit-content"
-        }}
-      >
+<Box
+  mt={2}
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    gap: 2
+  }}
+>
 
-        {/* Sort */}
-        <Box display="flex" alignItems="center">
+  {/* Sort */}
+  <Box display="flex" alignItems="center">
 
-          <Typography fontSize={14} sx={{ mr: 1 }}>
-            Sort By:
-          </Typography>
+    <Typography fontSize={14} sx={{ mr: 0.5 }}>
+      Sort By:
+    </Typography>
 
-          <Select
-            value={filters.question_status_sort ?? "all"}
-            onChange={(e) =>
-              handleSortChange(e.target.value as QuestionStatusSort)
-            }
-            variant="standard"
-            disableUnderline
-            IconComponent={KeyboardArrowDownIcon}
-            sx={{
-              fontSize: 14,
-              fontWeight: 600,
-              color: "brand.tag",
-              minWidth: 120
-            }}
-          >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="correct">Correct Answer</MenuItem>
-            <MenuItem value="incorrect">Incorrect Answer</MenuItem>
-          </Select>
+    <Select
+      value={filters.question_status_sort ?? "all"}
+      onChange={(e) =>
+        handleSortChange(e.target.value as QuestionStatusSort)
+      }
+      variant="standard"
+      disableUnderline
+      IconComponent={KeyboardArrowDownIcon}
+      sx={{
+        fontSize: 14,
+        fontWeight: 600,
+        color: "brand.main",
+        minWidth: 60,
 
-        </Box>
+        "& .MuiSelect-select": {
+          paddingRight: "18px",
+          paddingLeft: 0
+        },
 
-        {/* Results Count */}
-        <Typography fontSize={14}>
-          Showing <b>{data?.count ?? 0}</b> results
-        </Typography>
+        "& .MuiSvgIcon-root": {
+          color: "brand.main",
+          fontSize: 18
+        }
+      }}
+    >
+      <MenuItem value="all">All</MenuItem>
+      <MenuItem value="correct">Correct Answer</MenuItem>
+      <MenuItem value="incorrect">Incorrect Answer</MenuItem>
+    </Select>
 
-      </Box>
+  </Box>
 
+  {/* Results Count */}
+  <Typography fontSize={14}>
+    Showing{" "}
+    <Box
+      component="span"
+      sx={{
+        color: "brand.main",
+        fontWeight: 600
+      }}
+    >
+      {data?.count ?? 0}
+    </Box>{" "}
+    results
+  </Typography>
+
+</Box>
       {/* Question List */}
       <Box mt={4}>
 

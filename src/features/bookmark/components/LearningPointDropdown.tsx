@@ -1,12 +1,5 @@
-import {
-  FormControl,
-  Select,
-  MenuItem,
-  Checkbox,
-  ListItemText,
-  SelectChangeEvent,
-} from "@mui/material"
 
+import MultiSelectFilter from "../../../shared/components/MultiSelectFilter"
 import { useBookmarkLearningPoints } from "../api/bookmark.hooks"
 
 import type { BookmarkQueryParams } from "../api/bookmark.types"
@@ -23,46 +16,26 @@ export default function LearningPointDropdown({
 
   const { data } = useBookmarkLearningPoints()
 
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
+  const selected = filters.learning_point ?? []
 
-    const value = event.target.value
-
-    setFilters((prev) => ({
-      ...prev,
-      learning_point:
-        typeof value === "string"
-          ? value.split(",")
-          : value,
-      page: 1,
-    }))
-  }
+  const options =
+    data?.results?.map((lp: string) => ({
+      value: lp,
+      label: lp,
+    })) ?? []
 
   return (
-    <FormControl sx={{ minWidth: 240 }}>
-
-      <Select
-        multiple
-        displayEmpty
-        value={filters.learning_point ?? []}
-        onChange={handleChange}
-        renderValue={(selected) =>
-          selected.length === 0
-            ? "All"
-            : selected.length + " Selected"
-        }
-      >
-
-        {data?.results?.map((lp: string) => (
-          <MenuItem key={lp} value={lp}>
-            <Checkbox
-              checked={filters.learning_point?.includes(lp) ?? false}
-            />
-            <ListItemText primary={lp} />
-          </MenuItem>
-        ))}
-
-      </Select>
-
-    </FormControl>
+    <MultiSelectFilter
+      label="Learning Points"
+      options={options}
+      value={selected}
+      onChange={(value) =>
+        setFilters((prev) => ({
+          ...prev,
+          learning_point: value,
+          page: 1,
+        }))
+      }
+    />
   )
 }
