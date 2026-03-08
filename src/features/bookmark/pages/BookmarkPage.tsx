@@ -20,15 +20,6 @@ export default function QuestionBookmarkPage() {
 
   const results = data?.results ?? []
 
-  const handleReset = () => {
-    setFilters({
-      page: 1,
-      page_size: 10,
-      programs: [],
-      learning_point: [],
-      phases: [],
-    })
-  }
 
   return (
     <Box>
@@ -57,18 +48,9 @@ export default function QuestionBookmarkPage() {
         mb={2}
         alignItems="center"
       >
-        <Typography variant="body2">
+        <Typography variant="body2" color="primary.main">
           Showing {results.length} results
         </Typography>
-
-        <Link
-          component="button"
-          variant="body2"
-          onClick={handleReset}
-          sx={{ ml: 1 }}
-        >
-          Reset
-        </Link>
       </Stack>
 
       <Stack spacing={2}>

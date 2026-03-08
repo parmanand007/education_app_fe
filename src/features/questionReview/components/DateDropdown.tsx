@@ -1,4 +1,11 @@
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material"
+import {
+  FormControl,
+  Select,
+  MenuItem,
+  Box,
+  Typography
+} from "@mui/material"
+
 import { Dispatch, SetStateAction, useState } from "react"
 import { QuestionReviewFilters } from "../api/questionReview.types"
 
@@ -7,12 +14,25 @@ interface Props {
   setFilters: Dispatch<SetStateAction<QuestionReviewFilters>>
 }
 
+const DATE_OPTIONS = [
+  { label: "This Week", value: "this_week" },
+  { label: "Last Week", value: "last_week" },
+  { label: "This Month", value: "this_month" },
+  { label: "Last 3 Months", value: "last_3_months" },
+  { label: "Last 6 Months", value: "last_6_months" },
+  { label: "Last 9 Months", value: "last_9_months" },
+  { label: "Last Year", value: "last_year" },
+  { label: "This Year", value: "this_year" }
+]
+
 export default function DateDropdown({
   filters,
   setFilters
 }: Props) {
 
   const [value, setValue] = useState("this_year")
+
+  const isSelected = value !== ""
 
   const handleChange = (val: string) => {
 
@@ -68,25 +88,54 @@ export default function DateDropdown({
   }
 
   return (
-    <FormControl size="small" sx={{ width: 180 }}>
+    <Box sx={{ position: "relative", width: 240 }}>
 
-      <InputLabel shrink>Date</InputLabel>
-
-      <Select
-        label="Date"
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
+      <Typography
+        sx={{
+          position: "absolute",
+          top: 4,
+          left: 14,
+          fontSize: 12,
+          fontWeight: 500,
+          color: isSelected ? "#fff" : "text.secondary",
+          pointerEvents: "none",
+          zIndex: 1
+        }}
       >
-        <MenuItem value="this_week">This Week</MenuItem>
-        <MenuItem value="last_week">Last Week</MenuItem>
-        <MenuItem value="this_month">This Month</MenuItem>
-        <MenuItem value="last_3_months">Last 3 Months</MenuItem>
-        <MenuItem value="last_6_months">Last 6 Months</MenuItem>
-        <MenuItem value="last_9_months">Last 9 Months</MenuItem>
-        <MenuItem value="last_year">Last Year</MenuItem>
-        <MenuItem value="this_year">This Year</MenuItem>
-      </Select>
+        Date
+      </Typography>
 
-    </FormControl>
+      <FormControl fullWidth>
+
+        <Select
+          value={value}
+          onChange={(e) => handleChange(e.target.value)}
+          sx={{
+            height: 56,
+            borderRadius: "10px",
+
+            bgcolor: isSelected ? "brand.dark" : "background.paper",
+            color: isSelected ? "#fff" : "text.primary",
+
+            "& .MuiSelect-select": {
+              pt: "14px",
+              pb: "4px"
+            },
+
+            "& .MuiSelect-icon": {
+              color: isSelected ? "#fff" : "text.secondary"
+            }
+          }}
+        >
+          {DATE_OPTIONS.map((opt) => (
+            <MenuItem key={opt.value} value={opt.value}>
+              {opt.label}
+            </MenuItem>
+          ))}
+        </Select>
+
+      </FormControl>
+
+    </Box>
   )
 }

@@ -1,12 +1,6 @@
-import {
-  FormControl,
-  Select,
-  MenuItem,
-  Checkbox,
-  ListItemText,
-  SelectChangeEvent,
-} from "@mui/material"
 
+
+import MultiSelectFilter from "../../../shared/components/MultiSelectFilter"
 import type { BookmarkQueryParams } from "../api/bookmark.types"
 
 interface PhaseDropdownProps {
@@ -25,46 +19,20 @@ export default function PhaseDropdown({
   setFilters,
 }: PhaseDropdownProps) {
 
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
-
-    const value = event.target.value
-
-    setFilters((prev) => ({
-      ...prev,
-      phases:
-        typeof value === "string"
-          ? value.split(",")
-          : value,
-      page: 1,
-    }))
-  }
+  const selected = filters.phases ?? []
 
   return (
-    <FormControl sx={{ minWidth: 240 }}>
-
-      <Select
-        multiple
-        displayEmpty
-        value={filters.phases ?? []}
-        onChange={handleChange}
-        renderValue={(selected) =>
-          selected.length === 0
-            ? "All"
-            : selected.join(", ")
-        }
-      >
-
-        {PHASES.map((phase) => (
-          <MenuItem key={phase.value} value={phase.value}>
-            <Checkbox
-              checked={filters.phases?.includes(phase.value) ?? false}
-            />
-            <ListItemText primary={phase.label} />
-          </MenuItem>
-        ))}
-
-      </Select>
-
-    </FormControl>
+    <MultiSelectFilter
+      label="Phases"
+      options={PHASES}
+      value={selected}
+      onChange={(value) =>
+        setFilters((prev) => ({
+          ...prev,
+          phases: value,
+          page: 1,
+        }))
+      }
+    />
   )
 }
