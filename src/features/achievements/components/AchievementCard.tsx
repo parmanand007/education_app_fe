@@ -12,6 +12,7 @@ import LaunchIcon from "@mui/icons-material/OpenInNew"
 import DownloadIcon from "@mui/icons-material/Download"
 import MenuBookIcon from "@mui/icons-material/MenuBook"
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium"
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 
 import { AchievementProgram } from "../api/achievements.types"
 
@@ -31,6 +32,9 @@ export default function AchievementCard({ program }: Props) {
       year: "numeric"
     }
   )
+  const FALLBACK_IMAGE =
+    "https://media.istockphoto.com/id/2153813386/photo/hospital-teamwork-and-doctors-with-folder-tablet-and-brainstorming-for-healthcare-and.jpg?s=612x612&w=0&k=20&c=yujrA_9IMw2t9t33VmqcWi3l-TYv0cvcAg6l6DGQoQg=";
+
 
   return (
     <Box
@@ -39,7 +43,7 @@ export default function AchievementCard({ program }: Props) {
         maxWidth: 340,
         background: theme.palette.background.paper,
         border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 3,
+        borderRadius: 1,
         overflow: "hidden",
         display: "flex",
         flexDirection: "column"
@@ -50,7 +54,7 @@ export default function AchievementCard({ program }: Props) {
         sx={{
           position: "relative",
           height: 150,
-          backgroundImage: `url(${program.image})`,
+          backgroundImage: `url(${program.image || FALLBACK_IMAGE})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -113,9 +117,13 @@ export default function AchievementCard({ program }: Props) {
             mb: 1
           }}
         >
-          <Typography>
+          <Stack direction="row" spacing={0.5} alignItems="center">
+            <ImportContactsIcon sx={{ fontSize: 12 }} />
+          <Typography variant="body2">
             {program.mandatory ? "Mandatory" : "Elective"}
           </Typography>
+
+          </Stack>
 
           <Typography>•</Typography>
 
@@ -140,7 +148,7 @@ export default function AchievementCard({ program }: Props) {
 
               <Stack direction="row" spacing={0.5} alignItems="center">
                 <WorkspacePremiumIcon sx={{ fontSize: 12 }} />
-                <Typography>Certificate</Typography>
+                <Typography variant="body2">Certificate</Typography>
               </Stack>
             </>
           )}
