@@ -1,4 +1,5 @@
 import { Box, Typography, LinearProgress, Stack } from "@mui/material"
+import badgeLogo from "../../../assets/images/badge-logo.svg"
 
 interface Badge {
   badge_id: string
@@ -31,7 +32,7 @@ export default function BadgesCard({ wallet, badges }: Props) {
     <Box
       sx={{
         border: "1px solid #E5E7EB",
-        borderRadius: 4,
+        borderRadius: 1,
         overflow: "hidden",
         background: "#fff"
       }}
@@ -44,6 +45,7 @@ export default function BadgesCard({ wallet, badges }: Props) {
           py: 1.5,
           fontWeight: 700,
           borderBottom: "1px solid #E5E7EB",
+          background: "#F5E6C8",  
           fontSize: 18
         }}
       >
@@ -57,8 +59,10 @@ export default function BadgesCard({ wallet, badges }: Props) {
 
           <Box
             component="img"
-            src="/badge-icon.svg"
+            src={badgeLogo}
             sx={{ width: 42 }}
+            alt="Coin"
+            
           />
 
           <Box>

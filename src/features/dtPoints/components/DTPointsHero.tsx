@@ -26,7 +26,17 @@ export default function HeroSection({ wallet }: any) {
           Track your DT Points and contest details effortlessly with our comprehensive dashboard.
         </Typography>
 
-        <Stack direction="row" spacing={0} mt={2}>
+          <Stack
+  direction="row"
+  mt={2}
+  borderRadius={1}
+  sx={{
+    border: "1px solid rgba(255,255,255,0.6)",
+    overflow: "hidden",
+    width: "fit-content"
+  }}
+>
+
 
           <StatBox label="AVAILABLE POINTS" value={wallet.total_earned_points} />
           <StatBox label="LIFETIME EARNED" value={wallet.lifetime_balance} />
@@ -64,7 +74,8 @@ function StatBox({ label, value }: any) {
         borderRight: "none",
         "&:last-child": {
           borderRight: "1px solid rgba(255,255,255,0.6)"
-        }
+        },
+        boxShadow: `0 3px 0 rgba(255,255,255,0.6)`
       }}
     >
 

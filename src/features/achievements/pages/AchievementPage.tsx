@@ -29,7 +29,7 @@ export default function AchievementsPage() {
       <Box
         sx={(theme) => ({
           background: theme.palette.brand.light,
-          borderRadius: 3,
+          borderRadius: 1,
           p: 3,
           mb: 3,
           display: "flex",
