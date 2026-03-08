@@ -9,9 +9,8 @@ export default function CMEHero() {
       sx={{
         mb: 3,
         p: 3,
-        borderRadius: 3,
-        background: `linear-gradient(90deg, ${theme.palette.brand.main}, ${theme.palette.brand.dark})`,
-        color: "#fff",
+        borderRadius: 1,
+        background: "#dceaf2",
       }}
     >
       <Typography variant="h5" sx={{ mb: 1 }}>

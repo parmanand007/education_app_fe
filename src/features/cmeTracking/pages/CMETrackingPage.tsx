@@ -1,4 +1,4 @@
-import { Grid, Box, CircularProgress } from "@mui/material";
+import { Grid, Box, CircularProgress, Typography } from "@mui/material";
 
 import { useCMESummary, useCMEData } from "../api/cmeTracking.hooks";
 
@@ -9,6 +9,7 @@ import CMEChart from "../components/CMEChart";
 import { buildCMEChartData } from "../../../shared/utils/cmeChart.utils";
 import CMEAccreditationCard from "../components/CMEAccreditationCard";
 import CMEInfoCard from "../components/CMEInfoCard";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 export default function CMETrackingPage() {
 
@@ -33,6 +34,16 @@ export default function CMETrackingPage() {
     <Box>
 
       <CMEHero />
+      <Box
+  display="flex"
+  alignItems="center"
+  gap={1}
+  mb={2}
+  color="primary.main"
+>
+  <Typography>Current Year CME</Typography>
+  <InfoOutlinedIcon sx={{ fontSize: 16, opacity: 0.7 }} />
+</Box>
 
       <Grid container spacing={3}>
 
