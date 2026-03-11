@@ -65,6 +65,13 @@ export default function EditProfileForm({ profile }: Props) {
         variant="contained"
         onClick={handleSubmit}
         disabled={updateProfile.isPending}
+        sx={{
+    bgcolor: "brand.tag",
+    "&:hover": {
+      bgcolor: "brand.dark",
+    },
+    color:"background.paper"
+  }}
       >
         Save Changes
       </Button>

@@ -1,18 +1,18 @@
-import { Grid, Box, CircularProgress, Typography, Paper } from "@mui/material";
+import { Grid, Box, CircularProgress, Typography, Paper } from "@mui/material"
 
-import { useProfile } from "../api/account.hooks";
+import { useProfile } from "../api/account.hooks"
 
-import AvatarUpload from "../components/AvatarUpload";
-import EditProfileForm from "../components/EditProfileForm";
-import ProfileCard from "../components/ProfileCard";
+import AvatarUpload from "../components/AvatarUpload"
+import EditProfileForm from "../components/EditProfileForm"
+import AccountSidebar from "../components/AccountSidebar"
 
 export default function EditProfilePage() {
 
-  const { data: profile, isLoading } = useProfile();
+  const { data: profile, isLoading } = useProfile()
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <CircularProgress />
 
-  if (!profile) return null;
+  if (!profile) return null
 
   return (
 
@@ -22,25 +22,25 @@ export default function EditProfilePage() {
         variant="h5"
         sx={{ mb: 3 }}
       >
-        Account Settings
+        Account
       </Typography>
 
       <Grid container spacing={3}>
 
-        {/* LEFT PROFILE CARD */}
+        {/* LEFT SIDEBAR */}
 
         <Grid size={{ xs: 12, md: 4 }}>
 
-          <ProfileCard profile={profile} />
+          <AccountSidebar profile={profile} />
 
         </Grid>
 
 
-        {/* RIGHT EDIT PROFILE */}
+        {/* RIGHT EDIT PANEL */}
 
         <Grid size={{ xs: 12, md: 8 }}>
 
-          <Paper sx={{ p: 3 }}>
+          <Paper sx={{ p: 4 }}>
 
             <Typography
               variant="h6"
@@ -68,5 +68,5 @@ export default function EditProfilePage() {
       </Grid>
 
     </Box>
-  );
+  )
 }
