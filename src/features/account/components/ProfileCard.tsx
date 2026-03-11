@@ -23,7 +23,7 @@ export default function ProfileCard({ profile }: Props) {
       sx={{
         display: "flex",
         overflow: "hidden",
-        borderRadius: 2,
+        borderRadius: 0.5,
       }}
     >
 
