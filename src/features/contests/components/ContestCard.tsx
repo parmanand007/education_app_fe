@@ -3,6 +3,7 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import type { Contest } from "../api/contests.types";
+import { useNavigate } from "react-router-dom"
 
 interface Props {
   contest: Contest;
@@ -67,11 +68,13 @@ function getStatusStyles(status: number) {
 
 export default function ContestCard({ contest }: Props) {
   const theme = useTheme();
+  const navigate = useNavigate()
   const statusLabel = statusMap[contest.status];
   const styles = getStatusStyles(contest.status);
 
   return (
     <Box
+    onClick={() => navigate(`/contests/${contest.questionnaire_id}`)}
       sx={{
         backgroundColor: styles.bg,
         border: `1px solid ${styles.border}`,

@@ -69,3 +69,28 @@ export interface WalletLevel {
   constant_level: number
   unclaimed_badges_count: number
 }
+
+export interface ContestQuestion {
+  question_id: string
+  question: string
+  type: "SC" | "MC" | "BC"
+  choices: string[]
+  explanation: string
+  correct_answer: string[] | null
+  user_submitted_answers: string[] | null
+}
+
+export interface ContestQuestionsResponse {
+  questions_data: ContestQuestion[]
+  questions_submitted: number
+}
+
+export interface SubmitContestAnswerPayload {
+  questionnaire_id: string
+  user_answers: {
+    [questionId: string]: {
+      answer: string[]
+      tta: string
+    }
+  }
+}

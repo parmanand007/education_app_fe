@@ -16,6 +16,7 @@ import AchievementsPage from "../features/achievements/pages/AchievementPage";
 import DTPointsPage from "../features/dtPoints/pages/DTPointsPage";
 import CMETrackingPage from "../features/cmeTracking/pages/CMETrackingPage";
 import EditProfilePage from "../features/account/pages/EditProfilePage";
+import ContestQuestionsPage from "../features/contests/pages/ContestQuestionsPage";
 
 export function AppRouter() {
   const token = useAuthStore((s) => s.token);
@@ -53,6 +54,7 @@ export function AppRouter() {
          {/* Learning */}
         <Route path="programs" element={<MyProgramsPage />} />
         <Route path="contests" element={<ContestsPage />} />
+        <Route path="contests/:questionnaireId" element={<ContestQuestionsPage />} />
 
         {/* Account */}
         <Route path="/account" element={<EditProfilePage />} />
