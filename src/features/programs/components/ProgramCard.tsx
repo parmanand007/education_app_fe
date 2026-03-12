@@ -4,9 +4,12 @@ import {
   LinearProgress,
   Chip,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+
 import type { Program } from "../api/programs.types";
 
 interface Props {
@@ -14,13 +17,25 @@ interface Props {
 }
 
 export default function ProgramCard({ program }: Props) {
+  const navigate = useNavigate();
+
   const isInProgress = program.status === 0;
 
   const FALLBACK_IMAGE =
     "https://media.istockphoto.com/id/2153813386/photo/hospital-teamwork-and-doctors-with-folder-tablet-and-brainstorming-for-healthcare-and.jpg?s=612x612&w=0&k=20&c=yujrA_9IMw2t9t33VmqcWi3l-TYv0cvcAg6l6DGQoQg=";
 
+  const handleOpenProgram = () => {
+    navigate(`/programs/${program.program_id}`);
+  };
+
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box
+      sx={{
+        width: "100%",
+        cursor: "pointer",
+      }}
+      onClick={handleOpenProgram}
+    >
       {/* IMAGE */}
       <Box
         sx={{
@@ -55,7 +70,6 @@ export default function ProgramCard({ program }: Props) {
               height: 24,
               px: 1,
             })}
-            
           />
         )}
       </Box>
@@ -120,7 +134,6 @@ export default function ProgramCard({ program }: Props) {
             mt: 1,
             fontWeight: 500,
             color: theme.palette.primary.main,
-            cursor: "pointer",
           })}
         >
           Start Program
