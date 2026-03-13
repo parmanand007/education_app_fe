@@ -1,7 +1,6 @@
-import { Box, Grid } from "@mui/material"
-import { useParams } from "react-router-dom"
+import { Box, Grid,Typography } from "@mui/material"
+import { useNavigate, useParams } from "react-router-dom"
 
-import PageHeader from "../../../shared/components/PageHeader"
 import ProgramOverviewCard from "../components/ProgramOverviewCard"
 import ProgramModulesCard from "../components/ProgramModulesCard"
 
@@ -13,6 +12,7 @@ import {
 export default function ProgramDetailPage() {
 
   const { programId } = useParams<{ programId: string }>()
+  const navigate = useNavigate()
 
   const { data: program } = useProgramDetail(programId)
 
@@ -21,56 +21,124 @@ export default function ProgramDetailPage() {
   if (!program) return null
 
   const FALLBACK_IMAGE =
-    "https://media.istockphoto.com/id/2153813386/photo/hospital-teamwork-and-doctors-with-folder-tablet-and-brainstorming-for-healthcare-and.jpg"
-
+    "https://media.istockphoto.com/id/2153813386/photo/hospital-teamwork-and-doctors-with-folder-tablet-and-brainstorming-for-healthcare-and.jpg?s=612x612&w=0&k=20&c=yujrA_9IMw2t9t33VmqcWi3l-TYv0cvcAg6l6DGQoQg=";
   return (
 
     <Box maxWidth={1400} mx="auto">
 
       {/* HERO HEADER */}
+<Box
+  sx={{
+    height: 220,
+    borderRadius: 2,
+    overflow: "hidden",
+    mb: 3,
+    position: "relative"
+  }}
+>
+
+  {/* Background Image */}
+
+  <Box
+    component="img"
+    src={program.image || FALLBACK_IMAGE}
+    sx={{
+      position: "absolute",
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover"
+    }}
+  />
+
+
+  {/* Gradient Overlay */}
+
+  <Box
+    sx={{
+      position: "absolute",
+      inset: 0,
+      background:
+        "linear-gradient(90deg, rgba(15,23,42,0.75) 0%, rgba(15,23,42,0.45) 40%, rgba(15,23,42,0.2) 100%)"
+    }}
+  />
+
+
+  {/* BACK BUTTON */}
+
+  <Typography
+    onClick={() => navigate("/programs")}
+    sx={{
+      position: "absolute",
+      top: 16,
+      left: 24,
+      fontSize: 14,
+      color: "#fff",
+      cursor: "pointer",
+      opacity: 0.9,
+      zIndex: 2,
+      "&:hover": { opacity: 1 }
+    }}
+  >
+    ← Back
+  </Typography>
+
+
+  {/* HERO CONTENT (BOTTOM) */}
+
+  <Box
+    sx={{
+      position: "absolute",
+      bottom: 24,
+      left: 24,
+      color: "#fff",
+      maxWidth: 600
+    }}
+  >
+
+    {program.categories?.[0] && (
+
       <Box
         sx={{
-          height: 180,
-          borderRadius: 2,
-          overflow: "hidden",
-          mb: 3,
-          position: "relative"
+          display: "inline-block",
+          mb: 1,
+          px: 1.5,
+          py: 0.4,
+          borderRadius: 10,
+          fontSize: 12,
+          backgroundColor: "brand.tag"
         }}
       >
-        <Box
-          component="img"
-          src={program.image || FALLBACK_IMAGE}
-          sx={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            filter: "brightness(0.6)"
-          }}
-        />
-
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 24,
-            left: 24,
-            color: "#fff"
-          }}
-        >
-          <Box sx={{ fontSize: 14, mb: 0.5 }}>
-            {program.categories?.[0]}
-          </Box>
-
-          <Box sx={{ fontSize: 22, fontWeight: 600 }}>
-            {program.title}
-          </Box>
-
-          <Box sx={{ fontSize: 14 }}>
-            {program.sub_title}
-          </Box>
-        </Box>
+        {program.categories[0]}
       </Box>
 
+    )}
 
+    <Typography
+      sx={{
+        fontSize: 22,
+        fontWeight: 600
+      }}
+    >
+      {program.title}
+    </Typography>
+
+    {program.sub_title && (
+
+      <Typography
+        sx={{
+          fontSize: 14,
+          opacity: 0.9
+        }}
+      >
+        {program.sub_title}
+      </Typography>
+
+    )}
+
+  </Box>
+
+</Box>
       {/* PAGE GRID */}
       <Grid container spacing={4}>
 
