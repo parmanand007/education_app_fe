@@ -86,3 +86,39 @@ export const fetchProgramChapters = async (
 
   return data;
 };
+
+export const fetchChapterQuestions = async (
+  chapterId: string
+) => {
+
+  const { data } = await apiClient.get(
+    `/v1/web/programs/chapters/${chapterId}/questions/`
+  )
+
+  return data
+}
+
+export const submitProgramAnswer = async (
+  chapterId: string,
+  questionId: string,
+  answer: string[],
+  tta: number
+) => {
+
+  const payload = {
+    chapter_id: chapterId,
+    user_answers: {
+      [questionId]: {
+        answer,
+        tta: String(tta)
+      }
+    }
+  }
+
+  const { data } = await apiClient.post(
+    "/v1/web/programs/submissions/",
+    payload
+  )
+
+  return data
+}

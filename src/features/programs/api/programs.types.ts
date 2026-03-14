@@ -146,3 +146,44 @@ export interface ProgramChaptersResponse {
   previous: string | null;
   results: Chapter[];
 }
+
+export interface ProgramQuestion {
+
+  question_id: string
+  question: string
+  choices: string[]
+
+  type: "SC" | "MC" | "BC"
+
+  explanation: string | null
+
+  user_submitted_answer: string[] | null
+  correct_answer: string[] | null
+
+  module_details: {
+    module_id: string
+    module_name: string
+    media: {
+      media: string | null
+      thumbnail: string | null
+      post_type: string
+      post_id: string
+    }[]
+  }
+
+}
+
+export interface ChapterQuestionsResponse {
+
+  questions_data: ProgramQuestion[]
+  questions_submitted: number
+
+}
+
+
+export interface SubmitPayload {
+  chapterId: string
+  questionId: string
+  answer: string[]
+  tta: number
+}

@@ -147,7 +147,10 @@ export default function ProgramDetailPage() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <ProgramModulesCard chapters={chapters?.results ?? []} />
+          <ProgramModulesCard
+  chapters={chapters?.results ?? []}
+  programId={programId!}
+/>
         </Grid>
 
       </Grid>

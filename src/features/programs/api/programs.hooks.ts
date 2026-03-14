@@ -1,10 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   fetchPrograms,
   fetchProgramDetail,
-  fetchProgramChapters
+  fetchProgramChapters,
+  fetchChapterQuestions,
+  submitProgramAnswer
 } from "./programs.api";
+import { ChapterQuestionsResponse, SubmitPayload } from "./programs.types";
 
 
 
@@ -41,3 +44,42 @@ export const useProgramChapters = (
     enabled: !!programId,
   });
 };
+
+export const useChapterQuestions = (chapterId?: string) => {
+  return useQuery<ChapterQuestionsResponse>({
+    queryKey: ["chapter-questions", chapterId],
+    queryFn: () => fetchChapterQuestions(chapterId!),
+    enabled: !!chapterId
+  })
+}
+
+
+export const useSubmitProgramAnswer = () => {
+
+  const queryClient = useQueryClient()
+
+  return useMutation({
+
+    mutationFn: ({
+      chapterId,
+      questionId,
+      answer,
+      tta
+    }: SubmitPayload) =>
+      submitProgramAnswer(
+        chapterId,
+        questionId,
+        answer,
+        tta
+      ),
+
+    onSuccess: (_, variables) => {
+
+      queryClient.invalidateQueries({
+        queryKey: ["chapter-questions", variables.chapterId]
+      })
+
+    }
+
+  })
+}

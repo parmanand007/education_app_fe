@@ -9,21 +9,24 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow"
 import CheckIcon from "@mui/icons-material/Check"
 
-import type { Chapter } from "../api/programs.types"
+import { useNavigate } from "react-router-dom"
 
+import type { Chapter } from "../api/programs.types"
 
 interface Props {
   chapters: Chapter[]
+  programId: string
 }
 
-export default function ProgramModulesCard({ chapters }: Props) {
+export default function ProgramModulesCard({ chapters, programId }: Props) {
+
+  const navigate = useNavigate()
 
   return (
-
     <Paper
       sx={{
         p: 3,
-        border: "1px solid 10px",
+        border: "1px solid",
         borderColor: "divider"
       }}
     >
@@ -46,12 +49,26 @@ export default function ProgramModulesCard({ chapters }: Props) {
 
             <Box
               key={chapter.chapter_id}
+
+              onClick={() =>
+                navigate(
+                  `/programs/${programId}/chapters/${chapter.chapter_id}`
+                )
+              }
+
               sx={{
                 display: "flex",
                 alignItems: "center",
                 gap: 2,
                 p: 2,
                 borderRadius: 2,
+                cursor: "pointer",
+                transition: "all 0.2s",
+
+                "&:hover": {
+                  backgroundColor: "action.hover"
+                },
+
                 backgroundColor: completed
                   ? "rgba(16,185,129,0.08)"
                   : "transparent"
@@ -80,45 +97,28 @@ export default function ProgramModulesCard({ chapters }: Props) {
               </Box>
 
 
-
               {/* MODULE TEXT */}
 
               <Box sx={{ flex: 1 }}>
 
-                <Typography
-                  sx={{
-                    fontSize: 12,
-                    color: "text.secondary"
-                  }}
-                >
+                <Typography fontSize={12} color="text.secondary">
                   {chapter.chapter_type === "CM"
                     ? "Certification"
                     : "Training"}
                 </Typography>
 
-                <Typography
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: 14
-                  }}
-                >
+                <Typography fontWeight={600} fontSize={14}>
                   {module.module_name}
                 </Typography>
 
-                <Typography
-                  sx={{
-                    fontSize: 12,
-                    color: "text.secondary"
-                  }}
-                >
+                <Typography fontSize={12} color="text.secondary">
                   {module.description ?? ""}
                 </Typography>
 
               </Box>
 
 
-
-              {/* PLAY / COMPLETE BUTTON */}
+              {/* PLAY / COMPLETE */}
 
               <Box
                 sx={{
@@ -138,9 +138,7 @@ export default function ProgramModulesCard({ chapters }: Props) {
                     value={progress}
                     size={40}
                     thickness={4}
-                    sx={{
-                      color: "#f59e0b"
-                    }}
+                    sx={{ color: "#f59e0b" }}
                   />
 
                 )}
@@ -164,23 +162,9 @@ export default function ProgramModulesCard({ chapters }: Props) {
                 >
 
                   {completed ? (
-
-                    <CheckIcon
-                      sx={{
-                        fontSize: 18,
-                        color: "#fff"
-                      }}
-                    />
-
+                    <CheckIcon sx={{ fontSize: 18, color: "#fff" }} />
                   ) : (
-
-                    <PlayArrowIcon
-                      sx={{
-                        fontSize: 18,
-                        color: "#f59e0b"
-                      }}
-                    />
-
+                    <PlayArrowIcon sx={{ fontSize: 18, color: "#f59e0b" }} />
                   )}
 
                 </Box>

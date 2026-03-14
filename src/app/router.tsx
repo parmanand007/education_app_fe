@@ -18,6 +18,7 @@ import CMETrackingPage from "../features/cmeTracking/pages/CMETrackingPage";
 import EditProfilePage from "../features/account/pages/EditProfilePage";
 import ContestQuestionsPage from "../features/contests/pages/ContestQuestionsPage";
 import ProgramDetailPage from "../features/programs/pages/ProgramDetailPage";
+import ProgramQuestionPage from "../features/programs/pages/ProgramQuestionPage";
 
 export function AppRouter() {
   const token = useAuthStore((s) => s.token);
@@ -55,6 +56,10 @@ export function AppRouter() {
          {/* Learning */}
         <Route path="programs" element={<MyProgramsPage />} />
         <Route path="/programs/:programId" element={<ProgramDetailPage />}/>
+        <Route
+        path="/programs/:programId/chapters/:chapterId"
+        element={<ProgramQuestionPage />}
+      />
         <Route path="contests" element={<ContestsPage />} />
         <Route path="contests/:questionnaireId" element={<ContestQuestionsPage />} />
 
