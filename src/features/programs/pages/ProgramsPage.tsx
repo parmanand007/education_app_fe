@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import { usePrograms } from "../api/programs.hooks";
 import ProgramSection from "../components/ProgramSection";
 import PageHeader from "../../../shared/components/PageHeader";
+import { usePrograms } from "../api/programs.hooks";
 
 export default function ProgramsPage() {
   const { data, isLoading } = usePrograms();
