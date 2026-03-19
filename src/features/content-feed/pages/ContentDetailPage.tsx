@@ -112,7 +112,7 @@ export default function ContentDetailPage() {
           }}
         >
           <ArrowBackIcon fontSize="small" />
-          Back to Article Feed
+          Back
         </Box>
       </Box>
 
