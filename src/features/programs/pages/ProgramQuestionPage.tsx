@@ -11,7 +11,6 @@ import {
   CircularProgress
 } from "@mui/material"
 
-import { useParams } from "react-router-dom"
 
 import {
   useProgramChapters,
@@ -23,14 +22,15 @@ import type { ProgramQuestion } from "../api/programs.types"
 
 import ProgramModulesCard from "../components/ProgramModulesCard"
 import ProgramQuestionCard from "../components/ProgramQuestionCard"
+import { useParams } from "react-router-dom"
 
 export default function ProgramQuestionPage() {
-
+  
   const { programId, chapterId } = useParams<{
     programId: string
     chapterId: string
   }>()
-
+  
   const { data: chapters } =
     useProgramChapters(programId)
 

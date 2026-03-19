@@ -187,3 +187,30 @@ export interface SubmitPayload {
   answer: string[]
   tta: number
 }
+
+export interface ProgramResult {
+  program_name: string
+
+  mandatory: boolean
+  difficulty_level: "BEGINNER" | "INTERMEDIATE" | "ADVANCED"
+
+  total_questions: number
+  total_correct_answers: number
+  score_percentage: number
+
+  modules_count: number
+  modules_completed: number
+
+  certification_score: number
+  certification_earned: boolean
+
+  completed_date: string
+
+  cme_hours: number
+
+  assigned_on: string | null
+  start_date: string | null
+  end_date: string | null
+
+  user_rating: number | null
+}
