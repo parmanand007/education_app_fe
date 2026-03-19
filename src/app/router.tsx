@@ -19,6 +19,7 @@ import EditProfilePage from "../features/account/pages/EditProfilePage";
 import ContestQuestionsPage from "../features/contests/pages/ContestQuestionsPage";
 import ProgramDetailPage from "../features/programs/pages/ProgramDetailPage";
 import ProgramQuestionPage from "../features/programs/pages/ProgramQuestionPage";
+import ProgramResultPage from "../features/programs/components/ProgramResultSection";
 
 export function AppRouter() {
   const token = useAuthStore((s) => s.token);
@@ -59,6 +60,10 @@ export function AppRouter() {
         <Route
         path="/programs/:programId/chapters/:chapterId"
         element={<ProgramQuestionPage />}
+      />
+      <Route
+        path="/programs/:programId/result"
+        element={<ProgramResultPage />}
       />
         <Route path="contests" element={<ContestsPage />} />
         <Route path="contests/:questionnaireId" element={<ContestQuestionsPage />} />

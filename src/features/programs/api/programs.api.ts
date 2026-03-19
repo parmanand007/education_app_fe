@@ -2,7 +2,8 @@ import { apiClient } from "../../../services/apiClient";
 import type {
   Program,
   ProgramDetail,
-  ProgramChaptersResponse
+  ProgramChaptersResponse,
+  ProgramResult
 } from "./programs.types";
 
 
@@ -118,6 +119,17 @@ export const submitProgramAnswer = async (
   const { data } = await apiClient.post(
     "/v1/web/programs/submissions/",
     payload
+  )
+
+  return data
+}
+
+export const fetchProgramResult = async (
+  programId: string
+): Promise<ProgramResult> => {
+
+  const { data } = await apiClient.get<ProgramResult>(
+    `v2/programs/${programId}/result/`
   )
 
   return data

@@ -5,9 +5,10 @@ import {
   fetchProgramDetail,
   fetchProgramChapters,
   fetchChapterQuestions,
-  submitProgramAnswer
+  submitProgramAnswer,
+  fetchProgramResult
 } from "./programs.api";
-import { ChapterQuestionsResponse, SubmitPayload } from "./programs.types";
+import { ChapterQuestionsResponse, ProgramResult, SubmitPayload } from "./programs.types";
 
 
 
@@ -78,8 +79,30 @@ export const useSubmitProgramAnswer = () => {
       queryClient.invalidateQueries({
         queryKey: ["chapter-questions", variables.chapterId]
       })
+       // IMPORTANT: keep progress + completion synced
+      queryClient.invalidateQueries({
+        queryKey: ["program-chapters"]
+      })
+
+      queryClient.invalidateQueries({
+        queryKey: ["program-detail"]
+      })
 
     }
+    
 
   })
+}
+
+export const useProgramResult = (
+  programId?: string
+) => {
+
+  return useQuery<ProgramResult, Error>({
+    queryKey: ["program-result", programId],
+    queryFn: () => fetchProgramResult(programId!),
+    enabled: Boolean(programId),
+    staleTime: 5 * 60 * 1000,
+  })
+
 }
