@@ -4,6 +4,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import type { FeedItem } from "../api/contentFeed.types";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface Props {
   item: FeedItem;
@@ -11,6 +12,20 @@ interface Props {
 
 export default function FeedCard({ item }: Props) {
   const isVideo = item.feed.post_type === "VIDEO";
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleClick = () => {
+    navigate(`/content-feed/${item.feed.post_id}`, {
+      state: {
+        from: location.pathname + location.search, 
+        type: item.feed.post_type,
+        liked: item.liked,
+        likes_count: item.likes_count,
+      },
+    });
+  };
+
 
   return (
     <Box
@@ -20,6 +35,7 @@ export default function FeedCard({ item }: Props) {
         borderRadius: 1,
         p: 2,
       }}
+      onClick={handleClick}
     >
       {/* Title */}
       <Typography

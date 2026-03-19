@@ -3,7 +3,7 @@ export type PostType = "ARTICLE" | "VIDEO";
 export interface FeedItem {
   id: number;
   feed: {
-    id: number;
+    post_id: string;
     title: string;
     description: string;
     thumbnail?: string;
@@ -21,4 +21,27 @@ export interface FeedItem {
   trending: boolean;
   rating?: number | null;
   review?: string | null;
+}
+
+export interface ContentDetail {
+  post_id: string;
+  post_type: "ARTICLE" | "VIDEO";
+
+  title: string | null;
+  description: string | null;
+
+  thumbnail: string | null;
+  image: string | null;
+  media: string | null;
+
+  categories: string[];
+
+  internal_notes?: string;
+
+  trending_views: number;
+  trending_likes: number;
+  trending_comments: number;
+  liked?: boolean;
+
+  added_on: string;
 }
