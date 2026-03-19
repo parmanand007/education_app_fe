@@ -24,7 +24,7 @@ export default function VideoSection() {
         }}
       >
         {items.map((item) => (
-          <FeedCard key={item.feed.id} item={item} />
+          <FeedCard key={item.feed.post_id} item={item} />
         ))}
       </Box>
     </FeedSectionWrapper>
