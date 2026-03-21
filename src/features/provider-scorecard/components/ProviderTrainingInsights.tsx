@@ -48,6 +48,7 @@ flexWrap: "wrap",
                 borderColor="#22c55e"
                 backgroundColor="#eefaf3"
                 icon={<TrendingUpOutlinedIcon fontSize="small" />}
+                route="/learning-insights"
               />
             )}
 
