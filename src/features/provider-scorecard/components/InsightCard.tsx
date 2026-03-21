@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;
@@ -8,6 +9,7 @@ interface Props {
   borderColor: string;
   backgroundColor: string;
   icon: React.ReactNode;
+  route?: string;
 }
 
 export default function InsightCard({
@@ -15,10 +17,13 @@ export default function InsightCard({
   description,
   borderColor,
   backgroundColor,
+  route,
   icon,
 }: Props) {
+  const navigate = useNavigate();
   return (
     <Box
+    onClick={() => route && navigate(route)}
       sx={{
         backgroundColor,
         border: `1px solid ${borderColor}`,

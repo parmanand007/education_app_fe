@@ -21,6 +21,7 @@ import ProgramDetailPage from "../features/programs/pages/ProgramDetailPage";
 import ProgramQuestionPage from "../features/programs/pages/ProgramQuestionPage";
 import ProgramResultPage from "../features/programs/components/ProgramResultSection";
 import ContentDetailPage from "../features/content-feed/pages/ContentDetailPage";
+import LearningInsightsPage from "../features/provider-scorecard/pages/LearningInsightsPage";
 
 export function AppRouter() {
   const token = useAuthStore((s) => s.token);
@@ -48,6 +49,7 @@ export function AppRouter() {
         <Route path="content-feed" element={<ContentFeedPage />} />
         <Route path="/content-feed/:post_id" element={<ContentDetailPage />} />
         <Route path="provider-scorecard" element={<ProviderScorecardPage /> } />
+        <Route path="/learning-insights" element={<LearningInsightsPage /> } />
         <Route path="icd10" element={<ICDCodeSearchPage />} />
         <Route path="leaderboard" element={<LeaderboardPage />} />
         <Route path="/question-review" element={<QuestionReviewPage />} />
