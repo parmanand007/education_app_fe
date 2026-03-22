@@ -58,7 +58,9 @@ flexWrap: "wrap",
                 description="Review and track your yearly performance for growth."
                 borderColor="#a855f7"
                 backgroundColor="#f3ecfc"
-                icon={<InsightsOutlinedIcon fontSize="small" />}
+                icon={<InsightsOutlinedIcon fontSize="small" />
+                }
+                route="/learning-progress"
               />
             )}
           </Box>

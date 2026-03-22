@@ -32,3 +32,47 @@ export interface TrainingData {
     tr_annual_prog_accomplished_shown: boolean;
   };
 }
+
+export interface AnnualPerformance {
+  start_date: string;
+  end_date: string;
+
+  current_kpi: {
+    annual_achieved: number;
+    total_achieved_months: number;
+    total_months: number;
+    org_average: number;
+    monthly_achieved: boolean;
+  };
+
+  year_status: {
+    programs_compliance: number;
+    annual_certification_completion: boolean;
+    missed: number;
+    completed: number;
+  };
+
+  months_status: MonthStatus[];
+
+  target_data: {
+    tr_weekly_participation_target_data: number;
+    tr_question_accuracy_target_data: number;
+    tr_total_question_answered_target_data: number;
+    tr_video_watched_target_data: number;
+    tr_articles_read_target_data: number;
+    tr_programs_completion_target_data: number;
+  };
+}
+
+export interface MonthStatus {
+  missed: number;
+  completed: number;
+  contest_participation: number;
+  questions_accuracy: number;
+  questions_answered: number;
+  videos_watched: number;
+  articles_read: number;
+  year: number;
+  month_id: number;
+  status: number;
+}

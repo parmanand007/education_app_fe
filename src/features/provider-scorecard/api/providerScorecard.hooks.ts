@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchLearningInsights, fetchLearningPoints, fetchOrgGlobalConfiguration, LearningInsightsParams, LearningPointsParams } from "./providerScorecard.api";
+import { fetchAnnualPerformance, fetchLearningInsights, fetchLearningPoints, fetchOrgGlobalConfiguration, LearningInsightsParams, LearningPointsParams } from "./providerScorecard.api";
+import { AnnualPerformance, OrgGlobalConfiguration } from "./providerScorecard.types";
 
 export const useOrgGlobalConfiguration = () => {
   return useQuery({
@@ -52,4 +53,25 @@ export const useLearningPointDetails = (params: {
     queryFn: () => fetchLearningPoints(params),
     enabled: !!params.learning_point
   });
+};
+
+export const useLearningProgress = () => {
+  const configQuery = useQuery<OrgGlobalConfiguration>({
+    queryKey: ["org-config"],
+    queryFn: fetchOrgGlobalConfiguration,
+    staleTime: 1000 * 60 * 5
+  });
+
+  const performanceQuery = useQuery<AnnualPerformance>({
+    queryKey: ["annual-performance"],
+    queryFn: fetchAnnualPerformance,
+    staleTime: 1000 * 60 * 2
+  });
+
+  return {
+    config: configQuery.data,
+    performance: performanceQuery.data,
+    isLoading: configQuery.isLoading || performanceQuery.isLoading,
+    isError: configQuery.isError || performanceQuery.isError
+  };
 };

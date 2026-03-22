@@ -1,5 +1,5 @@
 import { apiClient } from "../../../services/apiClient";
-import { OrgGlobalConfiguration } from "./providerScorecard.types";
+import { AnnualPerformance, OrgGlobalConfiguration } from "./providerScorecard.types";
 
 export const fetchOrgGlobalConfiguration = async (): Promise<OrgGlobalConfiguration> => {
   const response = await apiClient.get<OrgGlobalConfiguration>(
@@ -47,5 +47,11 @@ export const fetchLearningPoints = async (
     }
   });
 
+  return res.data;
+};
+
+
+export const fetchAnnualPerformance = async (): Promise<AnnualPerformance> => {
+  const res = await apiClient.get("/v1/provider_scorecard/annual_performance/");
   return res.data;
 };
